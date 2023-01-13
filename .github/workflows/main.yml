@@ -1,0 +1,86 @@
+# This is the main workflow for the conan-cross-compile project. All other workflows are launched fron here.
+#
+# The conan-cross-compile project is created to cross-compile libraries I use for various projects deployed
+# on devices such as the Verdin iMX8 board, Raspberry Pi, etc.
+#
+# Each GitHub Action job is defined as follows:
+#
+# XXX__libraryName__XXX:
+#   uses: dandresky/conan-cross-compile/.github/workflows/conan_build.yml@main
+#   with:
+#     package_name: XXX__libraryName__XXX
+#     package_version: XXX__libraryVersion__XXX
+#     recipe_directory: 'XXX__libraryPath__XXX'
+#     options: '-o package:Option=True'
+#   secrets:
+#     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+#     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+
+name: Main Workflow
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  zlib:
+    uses: Mersive-Technologies/ConanRecipes/.github/workflows/conan_build.yml@master
+    with:
+      package_name: zlib
+      package_version: 1.2.11
+      recipe_directory: 'recipes/zlib/1.2.11'
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  boost:
+    uses: Mersive-Technologies/ConanRecipes/.github/workflows/conan_build.yml@master
+    with:
+      package_name: boost
+      package_version: 1.78.0
+      recipe_directory: 'recipes/boost/all'
+      options: '-o boost:without_locale=True'
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  protobuf:
+    uses: Mersive-Technologies/ConanRecipes/.github/workflows/conan_build.yml@master
+    with:
+      package_name: protobuf
+      package_version: 3.12.4
+      recipe_directory: 'recipes/protobuf/all'
+      options: '-o zeromq:shared=True'
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  cli11:
+    uses: Mersive-Technologies/ConanRecipes/.github/workflows/conan_build.yml@master
+    with:
+      package_name: cli11
+      package_version: 1.9.1
+      recipe_directory: 'recipes/cli11/all'
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  poco:
+    uses: Mersive-Technologies/ConanRecipes/.github/workflows/conan_build.yml@master
+    if: ${{ false }}
+    with:
+      package_name: poco
+      package_version: 1.10.1
+      recipe_directory: 'recipes/poco/all'
+      options: '-o poco:enable_crypto=False -o poco:enable_data_mysql=False -o poco:enable_data_postgresql=False -o poco:enable_data_sqlite=False -o poco:enable_jwt=False -o poco:enable_mongodb=False -o poco:enable_net=False -o poco:enable_netssl=False -o poco:enable_redis=False'
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  libusb:
+    uses: Mersive-Technologies/ConanRecipes/.github/workflows/conan_build.yml@master
+    with:
+      package_name: libusb
+      package_version: 1.0.24
+      recipe_directory: 'recipes/libusb/all'
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+
+  
