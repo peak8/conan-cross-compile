@@ -1,0 +1,35 @@
+name: Generate the Package Coordinate
+description: Generate the Package Coordinate
+
+inputs:
+  package_name:
+    description: 'The name of the package to build'
+    required: true
+  package_version:
+    description: 'The exact version of the package that it will be tagged as'
+    required: true
+  
+outputs:
+  coordinate:
+    description: The generated package coordinate
+    value: ${{ github.event_name == 'pull_request' && steps.pr_step.outputs.coordinate || steps.release_step.outputs.coordinate }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Use Release Coordinate
+      id: release_step
+      if: ${{ !(github.event_name == 'pull_request') }}
+      shell: bash
+      run: |
+        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/production"
+        echo "::set-output name=coordinate::\"${PACKAGE_COORDINATE}\""
+        echo "----> creating Release package coordinate: [${PACKAGE_COORDINATE}]"
+    - name: Use PR Coordinate
+      id: pr_step
+      if: ${{ github.event_name == 'pull_request' }}
+      shell: bash
+      run: |
+        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/pr-${{ github.sha }}"
+        echo "::set-output name=coordinate::\"${PACKAGE_COORDINATE}\""
+        echo "----> creating PR package coordinate: [${PACKAGE_COORDINATE}]"

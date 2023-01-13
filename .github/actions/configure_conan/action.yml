@@ -1,0 +1,20 @@
+name: Configure Conan Repository
+description: Configure the correct Artifactory server
+
+runs:
+  using: "composite"
+  steps:
+    - name: Use test repository
+      if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+      shell: bash
+      run: |
+        echo "----> Using test server"
+        conan remote add mersive https://artifactory.mersive.xyz/artifactory/api/conan/conan-test
+        conan user "$CONAN_USERNAME" -r mersive -p "$CONAN_PASSWORD"
+    - name: Use production repository
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      shell: bash
+      run: |
+        echo "----> Using production server"
+        conan remote add mersive https://artifactory.mersive.xyz/artifactory/api/conan/conan-mersive
+        conan user "$CONAN_USERNAME" -r mersive -p "$CONAN_PASSWORD"
