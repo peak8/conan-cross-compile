@@ -9,12 +9,12 @@ runs:
       shell: bash
       run: |
         echo "----> Using test server"
-        conan remote add mersive https://artifactory.mersive.xyz/artifactory/api/conan/conan-test
-        conan user "$CONAN_USERNAME" -r mersive -p "$CONAN_PASSWORD"
+        conan remote add peak8-conan https://dandresky.jfrog.io/artifactory/api/conan/peak8-conan
+        conan user "$CONAN_USERNAME" -r peak8 -p "$CONAN_PASSWORD"
     - name: Use production repository
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       shell: bash
       run: |
         echo "----> Using production server"
-        conan remote add mersive https://artifactory.mersive.xyz/artifactory/api/conan/conan-mersive
-        conan user "$CONAN_USERNAME" -r mersive -p "$CONAN_PASSWORD"
+        conan remote add peak8-conan https://dandresky.jfrog.io/artifactory/api/conan/peak8-conan
+        conan user "$CONAN_USERNAME" -r peak8 -p "$CONAN_PASSWORD"
