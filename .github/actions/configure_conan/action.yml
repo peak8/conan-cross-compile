@@ -17,4 +17,4 @@ runs:
       run: |
         echo "----> Using production server"
         conan remote add peak8-conan https://dandresky.jfrog.io/artifactory/api/conan/peak8-conan
-        conan user "$CONAN_USERNAME" -r peak8 -p "$CONAN_PASSWORD"
+        conan user "$CONAN_USERNAME" -r peak8-conan-remote -p "$CONAN_PASSWORD"
