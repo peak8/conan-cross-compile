@@ -81,56 +81,46 @@ jobs:
             echo "Package already exists!";
           fi
 
-#  linux_job:
-#    name: Linux-based Builds
-#    runs-on: ubuntu-22.04
-#    needs: check_if_should_build
-#    if: ${{ needs.check_if_should_build.outputs.shouldBuild == 'true' }}
-#    strategy:
-#      matrix:
-#        conan_profile: [android-ndk21d-armeabi-v7, android-ndk21d-armv64-v8a]
-#        library_type: [Debug, Release]
-#    env:
-#      PACKAGE_COORDINATE: ${{ needs.check_if_should_build.outputs.packageCoordinate }}
+  linux_job:
+    name: Linux-based Builds
+    runs-on: ubuntu-22.04
+    needs: check_if_should_build
+    if: ${{ needs.check_if_should_build.outputs.shouldBuild == 'true' }}
+    strategy:
+      matrix:
+        conan_profile: [linux-x86_64]
+        library_type: [Debug, Release]
+    env:
+      PACKAGE_COORDINATE: ${{ needs.check_if_should_build.outputs.packageCoordinate }}
 
-#    steps:
-#      - uses: actions/checkout@v3.3.0
+    steps:
+      - uses: actions/checkout@v3.3.0
 
-#      - name: Install Conan
-#        run: pip install conan
+      - name: Install Conan
+        run: pip install conan
 
-#      - name: Configure Conan
-#        uses: ./.github/actions/configure-conan
+      - name: Configure Conan
+        uses: ./.github/actions/configure-conan
 
-#      - name: Use Cached NDK
-#        id: cache_ndk
-#        uses: actions/cache@v3.2.3
-#        with:
-#          key: CACHE_KEY_NDK
-#          path: |
-#            - ~/.conan/data/android-ndk/r22b/
+      - name: Build Library
+        run: >
+          conan create
+          --build=missing
+          --profile:build default
+          --profile:host conan-profiles/${{ matrix.conan_profile }}
+          --test-folder None
+          ${{ inputs.options }}
+          -s build_type=${{ matrix.library_type }}
+          ${{ inputs.recipe_directory }}/
+          ${{ env.PACKAGE_COORDINATE }}
 
-#      - name: Build Library
-#        env:
-#          CC: ${{ steps.setup-ndk.outputs.ndk-path }}
-#        run: >
-#          conan create
-#          --build=missing
-#          --profile:build default
-#          --profile:host conan-profiles/${{ matrix.conan_profile }}
-#          --test-folder None
-#          ${{ inputs.options }}
-#          -s build_type=${{ matrix.library_type }}
-#          ${{ inputs.recipe_directory }}/
-#          ${{ env.PACKAGE_COORDINATE }}
-
-#      - name: Deploy to Artifactory
-#        run: >
-#          conan upload
-#          --all
-#          --confirm
-#          --remote peak8-conan
-#          '*'
+      - name: Deploy to Artifactory
+        run: >
+          conan upload
+          --all
+          --confirm
+          --remote peak8-conan
+          '*'
 
   windows_job:
     name: Windows-based Builds
