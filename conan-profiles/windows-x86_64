@@ -6,7 +6,7 @@
     compiler.version=17
     os=Windows
 
-[requires]
+[build_requires]
 
 [options]
     shared=True
