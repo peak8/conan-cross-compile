@@ -145,7 +145,7 @@ jobs:
       PACKAGE_COORDINATE: ${{ needs.check_if_should_build.outputs.packageCoordinate }}
 
     steps:
-      - uses: actions/checkout@v3.3
+      - uses: actions/checkout@v3.3.0
 
       - name: Install Conan
         run: pip install conan
