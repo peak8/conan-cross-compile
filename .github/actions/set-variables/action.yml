@@ -1,0 +1,20 @@
+# This action sets the variables for all versions used throughout the project so that I 
+# have just one place to track and manage version strings. I do so by creating a .env file
+# and reading in to this action. I can also trigger actions like building a library based
+# on changes to this file.
+
+name: Set environment variables
+description: Sets version environment variables to be used for all workflows
+
+inputs:
+  envVarFilePath:
+    description: Path to the .env file. Defaults to ./.github/variables/* if none specified and runs against each file in that directory.
+    required: false
+    default: ./.github/variables/*
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        sed "" ${{ inputs.envVarFilePath }} >> $GITHUB_ENV
+      shell: bash

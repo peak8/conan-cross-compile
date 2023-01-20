@@ -6,6 +6,7 @@
 # Each GitHub Action job is defined as follows:
 #
 # XXX__libraryName__XXX:
+#   needs: set_env_variables
 #   uses: peak8/conan-cross-compile/.github/workflows/build_conan_package.yml@main
 #   with:
 #     package_name: XXX__libraryName__XXX
@@ -24,12 +25,20 @@ on:
     branches: [ main ]
 
 jobs:
+  set_env_variables:
+    steps:
+      - name: Set Environment Variables
+        uses: ./.github/actions/set-variables
+        with:
+          varFilePath: ./.github/variables/versions.env
+
   zlib:
+    needs: set_env_variables
     uses: peak8/conan-cross-compile/.github/workflows/build-conan-package.yml@main
     with:
       package_name: zlib
-      package_version: 1.2.13
-      recipe_directory: 'recipes/zlib/1.2.13'
+      package_version: ${ZLIB_VER}
+      recipe_directory: 'recipes/zlib/${ZLIB_VER}'
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
