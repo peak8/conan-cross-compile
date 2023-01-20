@@ -10,7 +10,7 @@ inputs:
   envVarFilePath:
     description: Path to the .env file. Defaults to ./.github/variables/* if none specified and runs against each file in that directory.
     required: false
-    default: peak8/conan-cross-compile/.github/variables/*
+    default: ./.github/variables/*
 
 runs:
   using: "composite"
