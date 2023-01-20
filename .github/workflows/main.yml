@@ -26,6 +26,7 @@ on:
 
 jobs:
   set_env_variables:
+    runs-on: ubuntu-22.04
     steps:
       - name: Set Environment Variables
         uses: ./.github/actions/set-variables
