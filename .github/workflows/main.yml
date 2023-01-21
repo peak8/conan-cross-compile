@@ -35,7 +35,7 @@ jobs:
       - name: Set Environment Variables
         uses: ./.github/actions/set-variables/
         with:
-          varFilePath: ./.github/variables/versions.env
+          envVarFilePath: ./.github/variables/versions.env
 
   zlib:
     needs: set_env_variables
