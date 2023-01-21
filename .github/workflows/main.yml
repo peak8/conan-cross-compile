@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Set Environment Variables
-        uses: peak8/conan-cross-compile/.github/actions/set-variables/action.yml@main
+        uses: ./.github/actions/set-variables/
         with:
           varFilePath: ./.github/variables/versions.env
 
