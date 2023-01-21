@@ -26,8 +26,12 @@ on:
 
 jobs:
   set_env_variables:
+    name: Set environment variables
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v3.3.0
+        with:
+          fetch-depth: 2
       - name: Set Environment Variables
         uses: ./.github/actions/set-variables/
         with:
