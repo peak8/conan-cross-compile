@@ -18,27 +18,31 @@
 #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
 name: Main Workflow
+
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
+env:
+  ZLIB_VER: 1.2.13
+
 jobs:
-  set_env_variables:
-    name: Set environment variables
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3.3.0
-        with:
-          fetch-depth: 2
-      - name: Set Environment Variables
-        uses: ./.github/actions/set-variables/
-        with:
-          envVarFilePath: ./.github/variables/versions.env
+  # set_env_variables:
+  #   name: Set environment variables
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - uses: actions/checkout@v3.3.0
+  #       with:
+  #         fetch-depth: 2
+  #     - name: Set Environment Variables
+  #       uses: ./.github/actions/set-variables/
+  #       with:
+  #         envVarFilePath: ./.github/variables/versions.env
 
   zlib:
-    needs: set_env_variables
+    ##needs: set_env_variables
     uses: peak8/conan-cross-compile/.github/workflows/build-conan-package.yml@main
     with:
       package_name: zlib
