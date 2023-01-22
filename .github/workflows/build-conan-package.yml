@@ -164,42 +164,42 @@ jobs:
   #         --remote peak8-conan
   #         '*'
 
-#  mac_job:
-#    name: macOS-based Builds
-#    runs-on: macos-12
-#    needs: check_if_should_build
-#    if: ${{ needs.check_if_should_build.outputs.shouldBuild == 'true' }}
-#    strategy:
-#      matrix:
-#        conan_profile: [mac_intel, mac_arm, ios]
-#        library_type: [Debug, Release]
-#    env:
-#      PACKAGE_COORDINATE: ${{ needs.check_if_should_build.outputs.packageCoordinate }}
-#
-#    steps:
-#      - uses: actions/checkout@v3.3.0
+  # mac_job:
+  #   name: macOS-based Builds
+  #   runs-on: macos-12
+  #   needs: check_if_should_build
+  #   if: ${{ needs.check_if_should_build.outputs.shouldBuild == 'true' }}
+  #   strategy:
+  #     matrix:
+  #       conan_profile: [mac_intel, mac_arm, ios]
+  #       library_type: [Debug, Release]
+  #   env:
+  #     PACKAGE_COORDINATE: ${{ needs.check_if_should_build.outputs.packageCoordinate }}
 
-#      - name: Install Conan
-#        run: brew install conan
+  #   steps:
+  #     - uses: actions/checkout@v3.3.0
 
-#      - name: Configure Conan
-#        uses: ./.github/actions/configure-conan
+  #     - name: Install Conan
+  #       run: brew install conan
 
-#      - name: Build Library
-#        run: >
-#          conan create
-#          --build=missing
-#          --profile:build default
-#          --profile:host conan-profiles/${{ matrix.conan_profile }}
-#          --test-folder None
-#          ${{ inputs.options }}
-#          -s build_type=${{ matrix.library_type }}
-#          ${{ inputs.recipe_directory }}/
-#          ${{ env.PACKAGE_COORDINATE }}
-#      - name: Deploy to Artifactory
-#        run: >
-#          conan upload
-#          --all
-#          --confirm
-#          --remote peak8-conan
-#          '*'
+  #     - name: Configure Conan
+  #       uses: ./.github/actions/configure-conan
+
+  #     - name: Build Library
+  #       run: >
+  #         conan create
+  #         --build=missing
+  #         --profile:build default
+  #         --profile:host conan-profiles/${{ matrix.conan_profile }}
+  #         --test-folder None
+  #         ${{ inputs.options }}
+  #         -s build_type=${{ matrix.library_type }}
+  #         ${{ inputs.recipe_directory }}/
+  #         ${{ env.PACKAGE_COORDINATE }}
+  #     - name: Deploy to Artifactory
+  #       run: >
+  #         conan upload
+  #         --all
+  #         --confirm
+  #         --remote peak8-conan
+  #         '*'

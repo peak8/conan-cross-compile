@@ -24,9 +24,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  ZLIB_VER: 1.2.13
-
 jobs:
   # set_env_variables:
   #   name: Set environment variables
@@ -45,8 +42,8 @@ jobs:
     uses: peak8/conan-cross-compile/.github/workflows/build-conan-package.yml@main
     with:
       package_name: zlib
-      package_version: ${ZLIB_VER}
-      recipe_directory: recipes/zlib/${ZLIB_VER}
+      package_version: 1.2.13
+      recipe_directory: 'recipes/zlib/1.2.13'
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
