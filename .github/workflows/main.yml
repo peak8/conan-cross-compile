@@ -6,7 +6,6 @@
 # Each GitHub Action job is defined as follows:
 #
 # XXX__libraryName__XXX:
-#   needs: set_env_variables
 #   uses: peak8/conan-cross-compile/.github/workflows/build_conan_package.yml@main
 #   with:
 #     package_name: XXX__libraryName__XXX
