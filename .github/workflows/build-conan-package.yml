@@ -58,7 +58,6 @@ jobs:
         with:
           files: |
             ${{ inputs.recipe_directory }}
-            .github/
             conan-profiles/
 
       - name: Install Conan
