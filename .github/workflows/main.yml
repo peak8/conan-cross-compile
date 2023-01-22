@@ -45,8 +45,8 @@ jobs:
     uses: peak8/conan-cross-compile/.github/workflows/build-conan-package.yml@main
     with:
       package_name: zlib
-      package_version: ${ZLIB_VER}
-      recipe_directory: 'recipes/zlib/${ZLIB_VER}'
+      package_version: $ZLIB_VER
+      recipe_directory: 'recipes/zlib/$ZLIB_VER'
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
