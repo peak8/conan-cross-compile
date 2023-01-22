@@ -36,7 +36,7 @@ env:
 jobs:
   check_if_should_build:
     name: Check if we need to build
-    runs-on: ubuntu-$UBUNTU_VER
+    runs-on: ubuntu-${{env.UBUNTU_VER}}
     outputs:
       shouldBuild: ${{ (steps.files_changed.outputs.any_changed == 'true') || (steps.package_exists.outputs.packageExists == 'false') }}
       packageCoordinate: ${{ steps.gpc.outputs.coordinate }}
@@ -84,7 +84,7 @@ jobs:
 
   linux_job:
     name: Linux-based Builds
-    runs-on: ubuntu-$UBUNTU_VER
+    runs-on: ubuntu-${{env.UBUNTU_VER}}
     needs: check_if_should_build
     if: ${{ needs.check_if_should_build.outputs.shouldBuild == 'true' }}
     strategy:
