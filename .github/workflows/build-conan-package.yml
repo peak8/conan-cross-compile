@@ -73,12 +73,14 @@ jobs:
           echo "ANY_ERRORS=[$ANY_ERRORS]";
           if [[ $ANY_ERRORS -gt 0 ]];
           then
-            echo "::set-output name=packageExists::false";
+            echo "{packageExists}={false}" >> $GITHUB_OUTPUT;
             echo "Package does not already exist!";
           else
-            echo "::set-output name=packageExists::true";
+            echo "{packageExists}={true}" >> $GITHUB_OUTPUT;
             echo "Package already exists!";
           fi
+#echo "::set-output name=packageExists::false";
+#echo "::set-output name=packageExists::true";
 
   linux_job:
     name: Linux-based Builds
