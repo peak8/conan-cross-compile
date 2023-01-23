@@ -1,6 +1,6 @@
 # Conan Cross-Compile
 
-A simple project to explore cross-compiling using Conan and Github Actions. I am starting with building a 3rd party library and deploying to a personal artifactory account. This is kickstarted by examining the project Justin set up for Solstice and improving on it. Then I will make a simple hello world app targetting the Verdin iMX8M+ module. Here I will have to learn creating s custom recipe.
+A simple project to explore cross-compiling using Conan and Github Actions. I am starting with building a 3rd party library and deploying to a personal artifactory account. This is kickstarted by examining the project Justin set up for Solstice and improving on it. Then I will make a simple hello world app targetting the Verdin iMX8M+ module. Here I will have to learn creating a custom recipe.
 
 ## Secrets
 

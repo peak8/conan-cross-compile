@@ -4,13 +4,6 @@ description: Configure the correct Artifactory server
 runs:
   using: "composite"
   steps:
-    - name: Use test repository
-      if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-      shell: bash
-      run: |
-        echo "----> Using test server"
-        conan remote add peak8-conan https://dandresky.jfrog.io/artifactory/api/conan/peak8-conan
-        conan user "$CONAN_USERNAME" -r peak8-conan -p "$CONAN_PASSWORD"
     - name: Use production repository
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       shell: bash

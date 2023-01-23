@@ -58,6 +58,7 @@ jobs:
         with:
           files: |
             ${{ inputs.recipe_directory }}
+            .github/
             conan-profiles/
 
       - name: Install Conan
@@ -79,8 +80,6 @@ jobs:
             echo "{packageExists}={true}" >> $GITHUB_OUTPUT;
             echo "Package already exists!";
           fi
-#echo "::set-output name=packageExists::false";
-#echo "::set-output name=packageExists::true";
 
   linux_job:
     name: Linux-based Builds
@@ -122,85 +121,3 @@ jobs:
           --confirm
           --remote peak8-conan
           '*'
-
-  # windows_job:
-  #   name: Windows-based Builds
-  #   runs-on: windows-2022
-  #   needs: check_if_should_build
-  #   if: ${{ needs.check_if_should_build.outputs.shouldBuild == 'true' }}
-  #   strategy:
-  #     matrix:
-  #       conan_profile: [windows-x86_64]
-  #       library_type: [Debug, Release]
-  #   env:
-  #     PACKAGE_COORDINATE: ${{ needs.check_if_should_build.outputs.packageCoordinate }}
-
-  #   steps:
-  #     - uses: actions/checkout@v3.3.0
-
-  #     - name: Install Conan
-  #       run: pip install conan
-
-  #     - name: Configure Conan
-  #       uses: ./.github/actions/configure-conan
-
-  #     - name: Build Library
-  #       shell: cmd
-  #       run: >
-  #         conan create
-  #         --build=missing
-  #         --profile:build default
-  #         --profile:host conan-profiles/${{ matrix.conan_profile }}
-  #         --test-folder None
-  #         ${{ inputs.options }}
-  #         -s build_type=${{ matrix.library_type }}
-  #         ${{ inputs.recipe_directory }}/
-  #         ${{ env.PACKAGE_COORDINATE }}
-
-  #     - name: Deploy to Artifactory
-  #       run: >
-  #         conan upload
-  #         --all
-  #         --confirm
-  #         --remote peak8-conan
-  #         '*'
-
-  # mac_job:
-  #   name: macOS-based Builds
-  #   runs-on: macos-12
-  #   needs: check_if_should_build
-  #   if: ${{ needs.check_if_should_build.outputs.shouldBuild == 'true' }}
-  #   strategy:
-  #     matrix:
-  #       conan_profile: [mac_intel, mac_arm, ios]
-  #       library_type: [Debug, Release]
-  #   env:
-  #     PACKAGE_COORDINATE: ${{ needs.check_if_should_build.outputs.packageCoordinate }}
-
-  #   steps:
-  #     - uses: actions/checkout@v3.3.0
-
-  #     - name: Install Conan
-  #       run: brew install conan
-
-  #     - name: Configure Conan
-  #       uses: ./.github/actions/configure-conan
-
-  #     - name: Build Library
-  #       run: >
-  #         conan create
-  #         --build=missing
-  #         --profile:build default
-  #         --profile:host conan-profiles/${{ matrix.conan_profile }}
-  #         --test-folder None
-  #         ${{ inputs.options }}
-  #         -s build_type=${{ matrix.library_type }}
-  #         ${{ inputs.recipe_directory }}/
-  #         ${{ env.PACKAGE_COORDINATE }}
-  #     - name: Deploy to Artifactory
-  #       run: >
-  #         conan upload
-  #         --all
-  #         --confirm
-  #         --remote peak8-conan
-  #         '*'
