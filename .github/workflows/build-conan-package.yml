@@ -74,10 +74,10 @@ jobs:
           echo "ANY_ERRORS=[$ANY_ERRORS]";
           if [[ $ANY_ERRORS -gt 0 ]];
           then
-            echo "{packageExists}={false}" >> $GITHUB_OUTPUT;
+            echo "packageExists=false" >> $GITHUB_OUTPUT;
             echo "Package does not already exist!";
           else
-            echo "{packageExists}={true}" >> $GITHUB_OUTPUT;
+            echo "packageExists=true" >> $GITHUB_OUTPUT;
             echo "Package already exists!";
           fi
 
