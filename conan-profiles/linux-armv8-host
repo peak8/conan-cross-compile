@@ -31,5 +31,5 @@ OBJDUMP=$target_host-objdump
 RANLIB=$target_host-ranlib
 STRIP=$target_host-strip
 
-CFLAGS=-march=armv8a
-CXXFLAGS=-march=armv8a
+CFLAGS=-march=armv8-a
+CXXFLAGS=-march=armv8-a
