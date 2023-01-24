@@ -136,6 +136,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
 
+      - name: Install Cross-compiler
+        run: apt install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+
       - name: Install Conan
         run: pip install conan
 
