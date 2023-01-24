@@ -139,7 +139,7 @@ jobs:
       - name: Install Cross-compiler
         run: |
           sudo apt-get update
-          sudo apt install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+          sudo apt-get install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
       - name: Install Conan
         run: pip install conan
