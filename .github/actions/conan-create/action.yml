@@ -18,11 +18,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Generate Package Coordinate
-        uses: ./.github/actions/generate_conan_coordinate
-        with:
-          package_name: ${{ inputs.package_name }}
-          package_version: ${{ inputs.package_version }}
+    - uses: ./.github/actions/generate_conan_coordinate
+      with:
+        package_name: ${{ inputs.package_name }}
+        package_version: ${{ inputs.package_version }}
 
     - name: Check if Package Exists
         id: package_exists
