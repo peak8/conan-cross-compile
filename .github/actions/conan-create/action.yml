@@ -26,7 +26,7 @@ runs:
     - name: Check if Package Exists
       id: package_exists
       shell: bash
-      run: >
+      run: |
         ANY_ERRORS=$(conan search -r peak8-conan ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
