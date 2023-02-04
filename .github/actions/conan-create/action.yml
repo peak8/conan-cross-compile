@@ -18,7 +18,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: ./.github/actions/generate_conan_coordinate
+    - uses: ./.github/actions/generate-conan-coordinate
       with:
         package_name: ${{ inputs.package_name }}
         package_version: ${{ inputs.package_version }}
