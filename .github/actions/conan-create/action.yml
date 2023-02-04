@@ -32,10 +32,10 @@ runs:
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
         then
-          echo "packageExists=false" >> $GITHUB_ENV;
+          echo "packageExists=false" >> $GITHUB_OUTPUT;
           echo "Package does not already exist!";
         else
-          echo "packageExists=false" >> $GITHUB_ENV;
+          echo "packageExists=false" >> $GITHUB_OUTPUT;
           echo "Package already exists!";
         fi
 
