@@ -10,7 +10,7 @@ on:
       - 'alternative-structure'
   pull_request:
     branches: [ main ]
-  workflow_dispatch
+  workflow_dispatch:
     
 
 jobs:
