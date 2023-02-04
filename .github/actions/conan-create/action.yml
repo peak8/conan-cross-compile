@@ -35,7 +35,7 @@ runs:
           echo "packageExists=false" >> $GITHUB_ENV;
           echo "Package does not already exist!";
         else
-          echo "packageExists=true" >> $GITHUB_ENV;
+          echo "packageExists=false" >> $GITHUB_ENV;
           echo "Package already exists!";
         fi
 
@@ -43,6 +43,7 @@ runs:
       id: build_debug
       shell: bash
       run: >
+        echo "----> building debug version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
         if [[ env.packageExists == false ]];
         then
           conan create
@@ -60,6 +61,7 @@ runs:
       id: deploy_debug
       shell: bash
       run: >
+        echo "----> deploying debug version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
         if [[ env.packageExists == false ]];
         then
           conan upload
@@ -73,6 +75,7 @@ runs:
       id: build_release
       shell: bash
       run: >
+        echo "----> building release version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
         if [[ env.packageExists == false ]];
         then
           conan create
@@ -90,6 +93,7 @@ runs:
       id: deploy_release
       shell: bash
       run: >
+        echo "----> deploying release version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
         if [[ env.packageExists == false ]];
         then
           conan upload
