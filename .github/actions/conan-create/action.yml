@@ -25,6 +25,7 @@ runs:
 
     - name: Check if Package Exists
       id: package_exists
+      shell: bash
       run: >
         ANY_ERRORS=$(conan search -r peak8-conan ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
@@ -38,53 +39,61 @@ runs:
         fi
 
     - name: Build Library
-        run: >
-          if [[ env.packageExists == false ]];
-          then
-            conan create
-            --build=missing
-            --profile:build default
-            --profile:host ${{ inputs.profile }}
-            --test-folder None
-            ${{ inputs.options }}
-            -s build_type=Debug
-            ${{ inputs.recipe_directory }}/
-            ${{ env.PACKAGE_COORDINATE }}
-          fi
+      id: build_debug
+      shell: bash
+      run: >
+        if [[ env.packageExists == false ]];
+        then
+          conan create
+          --build=missing
+          --profile:build default
+          --profile:host ${{ inputs.profile }}
+          --test-folder None
+          ${{ inputs.options }}
+          -s build_type=Debug
+          ${{ inputs.recipe_directory }}/
+          ${{ env.PACKAGE_COORDINATE }}
+        fi
 
     - name: Deploy to Artifactory
-        run: >
-          if [[ env.packageExists == false ]];
-          then
-            conan upload
-            --all
-            --confirm
-            --remote peak8-conan
-            '*'
-          fi
+      id: deploy_debug
+      shell: bash
+      run: >
+        if [[ env.packageExists == false ]];
+        then
+          conan upload
+          --all
+          --confirm
+          --remote peak8-conan
+          '*'
+        fi
 
     - name: Build Library
-        run: >
-          if [[ env.packageExists == false ]];
-          then
-            conan create
-            --build=missing
-            --profile:build default
-            --profile:host ${{ inputs.profile }}
-            --test-folder None
-            ${{ inputs.options }}
-            -s build_type=Release
-            ${{ inputs.recipe_directory }}/
-            ${{ env.PACKAGE_COORDINATE }}
-          fi
+      id: build_release
+      shell: bash
+      run: >
+        if [[ env.packageExists == false ]];
+        then
+          conan create
+          --build=missing
+          --profile:build default
+          --profile:host ${{ inputs.profile }}
+          --test-folder None
+          ${{ inputs.options }}
+          -s build_type=Release
+          ${{ inputs.recipe_directory }}/
+          ${{ env.PACKAGE_COORDINATE }}
+        fi
 
     - name: Deploy to Artifactory
-        run: >
-          if [[ env.packageExists == false ]];
-          then
-            conan upload
-            --all
-            --confirm
-            --remote peak8-conan
-            '*'
-          fi
+      id: deploy_release
+      shell: bash
+      run: >
+        if [[ env.packageExists == false ]];
+        then
+          conan upload
+          --all
+          --confirm
+          --remote peak8-conan
+          '*'
+        fi
