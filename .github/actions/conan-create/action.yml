@@ -1,0 +1,92 @@
+name: Conan Create
+description: Create and deploy a conan package for a library if it does not already exist.
+
+inputs:
+  package_name:
+    description: 'The name of the package to build'
+    required: true
+  package_version:
+    description: 'The exact version of the package that it will be tagged as'
+    required: true
+  profile:
+    description: 'The path to the conan profile defining build info'
+    required: true
+  recipe_directory:
+    description: 'The path to the required recipe for the library'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate Package Coordinate
+        id: gpc
+        uses: ./.github/actions/generate_conan_coordinate
+        with:
+          package_name: ${{ inputs.package_name }}
+          package_version: ${{ inputs.package_version }}
+
+    - name: Check if Package Exists
+        id: package_exists
+        run: >
+          ANY_ERRORS=$(conan search -r peak8-conan ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
+          echo "ANY_ERRORS=[$ANY_ERRORS]";
+          if [[ $ANY_ERRORS -gt 0 ]];
+          then
+            echo "packageExists=false" >> $GITHUB_ENV;
+            echo "Package does not already exist!";
+          else
+            echo "packageExists=true" >> $GITHUB_ENV;
+            echo "Package already exists!";
+          fi
+
+    - name: Build Library
+        run: >
+          if [[ env.packageExists == false ]];
+          then
+            conan create
+            --build=missing
+            --profile:build default
+            --profile:host ${{ inputs.profile }}
+            --test-folder None
+            ${{ inputs.options }}
+            -s build_type=Debug
+            ${{ inputs.recipe_directory }}/
+            ${{ env.PACKAGE_COORDINATE }}
+          fi
+
+    - name: Deploy to Artifactory
+        run: >
+          if [[ env.packageExists == false ]];
+          then
+            conan upload
+            --all
+            --confirm
+            --remote peak8-conan
+            '*'
+          fi
+
+    - name: Build Library
+        run: >
+          if [[ env.packageExists == false ]];
+          then
+            conan create
+            --build=missing
+            --profile:build default
+            --profile:host ${{ inputs.profile }}
+            --test-folder None
+            ${{ inputs.options }}
+            -s build_type=Release
+            ${{ inputs.recipe_directory }}/
+            ${{ env.PACKAGE_COORDINATE }}
+          fi
+
+    - name: Deploy to Artifactory
+        run: >
+          if [[ env.packageExists == false ]];
+          then
+            conan upload
+            --all
+            --confirm
+            --remote peak8-conan
+            '*'
+          fi
