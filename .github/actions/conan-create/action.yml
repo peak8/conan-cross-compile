@@ -57,46 +57,40 @@ runs:
 
     - name: Deploy to Artifactory
       id: deploy_debug
+      if: ${{ env.packageExists == false }}
       shell: bash
       run: >
         echo "----> deploying debug version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
-        if [[ env.packageExists == false ]];
-        then
-          conan upload
-          --all
-          --confirm
-          --remote peak8-conan
-          '*'
-        fi
+        conan upload
+        --all
+        --confirm
+        --remote peak8-conan
+        '*'
 
     - name: Build Library
       id: build_release
+      if: ${{ env.packageExists == false }}
       shell: bash
       run: >
         echo "----> building release version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
-        if [[ env.packageExists == false ]];
-        then
-          conan create
-          --build=missing
-          --profile:build default
-          --profile:host ${{ inputs.profile }}
-          --test-folder None
-          ${{ inputs.options }}
-          -s build_type=Release
-          ${{ inputs.recipe_directory }}/
-          ${{ env.PACKAGE_COORDINATE }}
-        fi
+        conan create
+        --build=missing
+        --profile:build default
+        --profile:host ${{ inputs.profile }}
+        --test-folder None
+        ${{ inputs.options }}
+        -s build_type=Release
+        ${{ inputs.recipe_directory }}/
+        ${{ env.PACKAGE_COORDINATE }}
 
     - name: Deploy to Artifactory
       id: deploy_release
+      if: ${{ env.packageExists == false }}
       shell: bash
       run: >
         echo "----> deploying release version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
-        if [[ env.packageExists == false ]];
-        then
-          conan upload
-          --all
-          --confirm
-          --remote peak8-conan
-          '*'
-        fi
+        conan upload
+        --all
+        --confirm
+        --remote peak8-conan
+        '*'
