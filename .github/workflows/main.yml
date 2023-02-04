@@ -10,6 +10,10 @@ on:
       - 'alternative-structure'
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    branches:
+      - 'main'
+      - 'alternative-structure'
 
 jobs:
   libraries-for-linux-x86_64:
