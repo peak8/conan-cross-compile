@@ -22,8 +22,8 @@ env:
 
 jobs:
   linux_job:
+    # Builds libraries for use in applications to be deployed in the Linux x86_64 machine
     name: Build Linux Libraries
-    description: Builds libraries for use in applications to be deployed in the Linux x86_64 machine
     runs-on: ubuntu-22.04
 
     steps:
