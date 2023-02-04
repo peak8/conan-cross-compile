@@ -5,7 +5,7 @@ name: Main Workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main alternative-structure ]
   pull_request:
     branches: [ main ]
 
