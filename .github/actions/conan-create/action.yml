@@ -24,18 +24,18 @@ runs:
         package_version: ${{ inputs.package_version }}
 
     - name: Check if Package Exists
-        id: package_exists
-        run: >
-          ANY_ERRORS=$(conan search -r peak8-conan ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
-          echo "ANY_ERRORS=[$ANY_ERRORS]";
-          if [[ $ANY_ERRORS -gt 0 ]];
-          then
-            echo "packageExists=false" >> $GITHUB_ENV;
-            echo "Package does not already exist!";
-          else
-            echo "packageExists=true" >> $GITHUB_ENV;
-            echo "Package already exists!";
-          fi
+      id: package_exists
+      run: >
+        ANY_ERRORS=$(conan search -r peak8-conan ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
+        echo "ANY_ERRORS=[$ANY_ERRORS]";
+        if [[ $ANY_ERRORS -gt 0 ]];
+        then
+          echo "packageExists=false" >> $GITHUB_ENV;
+          echo "Package does not already exist!";
+        else
+          echo "packageExists=true" >> $GITHUB_ENV;
+          echo "Package already exists!";
+        fi
 
     - name: Build Library
         run: >
