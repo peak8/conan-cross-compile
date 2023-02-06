@@ -26,7 +26,7 @@ runs:
     - name: Check if Package Exists
       id: package_exists
       shell: bash
-      run: >
+      run: |
         echo "----> checking if ${{ inputs.package_name }} v${{ inputs.package_version }} exists"
         ANY_ERRORS=$(conan search -r peak8-conan ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
@@ -43,7 +43,7 @@ runs:
       id: build_debug
       if: ${{ env.packageExists == false }}
       shell: bash
-      run: >
+      run: |
         echo "----> building debug version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
         conan create
         --build=missing
@@ -71,7 +71,7 @@ runs:
       id: build_release
       if: ${{ env.packageExists == false }}
       shell: bash
-      run: >
+      run: |
         echo "----> building release version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
         conan create
         --build=missing
@@ -87,7 +87,7 @@ runs:
       id: deploy_release
       if: ${{ env.packageExists == false }}
       shell: bash
-      run: >
+      run: |
         echo "----> deploying release version of ${{ inputs.package_name }} v${{ inputs.package_version }}"
         conan upload
         --all
