@@ -25,9 +25,6 @@ jobs:
     # Builds libraries for use in applications to be deployed in the Linux x86_64 machine
     name: Build Linux Libraries
     runs-on: ubuntu-22.04
-    defaults:
-      run:
-        shell: bash
 
     steps:
       - uses: actions/checkout@v3.3.0

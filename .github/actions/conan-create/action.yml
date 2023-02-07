@@ -18,7 +18,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Ganerate Conan Coordinate
+    - name: Generate Conan Coordinate
       id: generate_conan_coordinate
       uses: ./.github/actions/generate-conan-coordinate
       with:
@@ -28,7 +28,7 @@ runs:
     - name: Check if Package Exists
       id: package_exists
       run: |
-        ANY_ERRORS=$(conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
+        ANY_ERRORS=$(conan search -r peak8 zlib/1.2.13@peak8/production 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
         then
@@ -38,6 +38,7 @@ runs:
           echo "packageExists=true" >> $GITHUB_OUTPUT;
           echo "Package already exists!";
         fi
+      shell: bash
 
     # - name: Build Library
     #   id: build_debug

@@ -6,8 +6,8 @@ runs:
   steps:
     - name: Use production repository
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/alternative-structure' }}
-      shell: bash
       run: |
         echo "----> Using production server"
         conan remote add peak8 https://dandresky.jfrog.io/artifactory/api/conan/peak8
         conan user "$CONAN_USERNAME" -r peak8 -p "$CONAN_PASSWORD"
+      shell: bash
