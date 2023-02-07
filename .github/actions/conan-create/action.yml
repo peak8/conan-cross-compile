@@ -27,7 +27,6 @@ runs:
 
     - name: Check if Package Exists
       id: package_exists
-      if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
       shell: bash
       run: >
         ANY_ERRORS=$(conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
