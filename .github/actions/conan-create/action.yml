@@ -29,7 +29,7 @@ runs:
       id: package_exists
       if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
       shell: bash
-      run: >
+      run: 
         ANY_ERRORS=$(conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
