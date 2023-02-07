@@ -19,6 +19,7 @@ runs:
   using: "composite"
   steps:
     - name: Ganerate Conan Coordinate
+      id: generate_conan_coordinate
       uses: ./.github/actions/generate-conan-coordinate
       with:
         package_name: ${{ inputs.package_name }}
@@ -26,7 +27,7 @@ runs:
 
     - name: Check if Package Exists
       id: package_exists
-      if: ${{ (steps.release_step.outcome == 'success' || steps.pr_step.outcome == 'success') }}
+      if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
       shell: bash
       run: |
         echo "------> Check if package " ${{ env.PACKAGE_COORDINATE }} "exists"
