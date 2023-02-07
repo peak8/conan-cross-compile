@@ -30,7 +30,6 @@ runs:
       if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
       shell: bash
       run: >
-        echo "------> Check if package ${{ env.PACKAGE_COORDINATE }} exists";
         ANY_ERRORS=$(conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
@@ -44,7 +43,7 @@ runs:
 
     - name: Build Library
       id: build_debug
-      if: ${{ env.packageExists == false }}
+      if: ${{ env.packageExists == false && (steps.package_exists.outcome == 'success') }}
       shell: bash
       run: >
         conan create
@@ -55,11 +54,11 @@ runs:
         ${{ inputs.options }}
         -s build_type=Debug
         ${{ inputs.recipe_directory }}/
-        ${{ env.coordinate }}
+        ${{ env.PACKAGE_COORDINATE }}
 
     - name: Deploy to Artifactory
       id: deploy_debug
-      if: ${{ env.packageExists == false }}
+      if: ${{ env.packageExists == false && (steps.build_debug.outcome == 'success') }}
       shell: bash
       run: >
         conan upload
@@ -70,7 +69,7 @@ runs:
 
     - name: Build Library
       id: build_release
-      if: ${{ env.packageExists == false }}
+      if: ${{ env.packageExists == false && (steps.deploy_debug.outcome == 'success') }}
       shell: bash
       run: >
         conan create
@@ -85,7 +84,7 @@ runs:
 
     - name: Deploy to Artifactory
       id: deploy_release
-      if: ${{ env.packageExists == false }}
+      if: ${{ env.packageExists == false && (steps.build_release.outcome == 'success') }}
       shell: bash
       run: >
         conan upload
