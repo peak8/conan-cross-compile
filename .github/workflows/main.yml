@@ -5,7 +5,9 @@ name: Main Workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - 'main'
+      - 'alternative-structure'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -13,7 +15,7 @@ on:
 
 jobs:
   libraries-for-linux-x86_64:
-    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@main
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@alternative-structure
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
