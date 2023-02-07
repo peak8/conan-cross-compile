@@ -32,8 +32,10 @@ runs:
       run: |
         conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1
         echo "HELLO 1"
-        conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR
+        echo something | grep so
         echo "HELLO 2"
+        echo bro | grep apple
+        echo "HELLO 3"
         ANY_ERRORS=$(conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
