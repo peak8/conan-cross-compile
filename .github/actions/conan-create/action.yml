@@ -27,8 +27,12 @@ runs:
 
     - name: Check if Package Exists
       id: package_exists
+      if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
+      shell: bash
       run: |
-        ANY_ERRORS=$(conan search -r peak8 zlib/1.2.13@peak8/production 2>&1 | grep ERROR | wc -l);
+        conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 >> temp.txt 
+        cat temp.txt 
+        ANY_ERRORS=$(cat temp.txt | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
         then
@@ -38,7 +42,6 @@ runs:
           echo "packageExists=true" >> $GITHUB_OUTPUT;
           echo "Package already exists!";
         fi
-      shell: bash
 
     # - name: Build Library
     #   id: build_debug
@@ -85,7 +88,7 @@ runs:
     #   id: deploy_release
     #   if: ${{ env.packageExists == false && (steps.build_release.outcome == 'success') }}
     #   shell: bash
-    #   run: >
+    #   run: |
     #     conan upload
     #     --all
     #     --confirm
