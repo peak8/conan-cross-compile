@@ -34,8 +34,14 @@ runs:
         echo "HELLO 1"
         cat temp.txt
         echo "HELLO 2"
-        ANY_ERRORS=$(cat temp.txt | grep ERROR | wc -l);
+        cat temp.txt | grep ERROR
         echo "HELLO 3"
+        cat temp.txt | grep ERROR | wc -l
+        echo "HELLO 4"
+        $(cat temp.txt | grep ERROR | wc -l)
+        echo "HELLO 5"
+        ANY_ERRORS=$(cat temp.txt | grep ERROR | wc -l);
+        echo "HELLO 6"
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
         then
