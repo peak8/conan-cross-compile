@@ -30,8 +30,8 @@ runs:
       if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
       shell: bash
       run: >
-        echo "------> Check if package " ${{ env.coordinate }} "exists";
-        echo "------> Coordinate exists = " ${{env.coordinateExists}};
+        echo "------> Check if package ${{ env.coordinate }} exists";
+        echo "------> Coordinate exists = ${{env.coordinateExists}}";
         ANY_ERRORS=$(conan search -r peak8 ${{ env.coordinate }} 2>&1 | grep ERROR | wc -l);
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
