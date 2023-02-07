@@ -22,7 +22,7 @@ runs:
       if: ${{ !(github.event_name == 'pull_request') }}
       shell: bash
       run: |
-        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/production"
+        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8-conan/production"
         echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_OUTPUT;
         echo "----> creating Release package coordinate: [${PACKAGE_COORDINATE}]"
     - name: Use PR Coordinate
@@ -30,6 +30,6 @@ runs:
       if: ${{ github.event_name == 'pull_request' }}
       shell: bash
       run: |
-        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/pr-${{ github.sha }}"
+        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8-conan/pr-${{ github.sha }}"
         echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_OUTPUT;
         echo "----> creating PR package coordinate: [${PACKAGE_COORDINATE}]"
