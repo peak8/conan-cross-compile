@@ -18,14 +18,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: ./.github/actions/generate-conan-coordinate
+    - name: Ganerate Conan Coordinate
+      uses: ./.github/actions/generate-conan-coordinate
       with:
         package_name: ${{ inputs.package_name }}
         package_version: ${{ inputs.package_version }}
 
     - name: Check if Package Exists
       id: package_exists
-      if: steps.release_step.outcome == 'success' || steps.pr_step.outcome == 'success'
+      if: ${{ (steps.release_step.outcome == 'success' || steps.pr_step.outcome == 'success') }}
       shell: bash
       run: |
         echo "------> Check if package " ${{ env.PACKAGE_COORDINATE }} "exists"
