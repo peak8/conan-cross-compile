@@ -25,7 +25,7 @@ runs:
         export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/production"
         echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_ENV;
         echo "coordinateExists=true" >> $GITHUB_ENV;
-        echo "----> creating Release package coordinate: [${env.coordinate}]"
+        echo "----> creating Release package coordinate: [${PACKAGE_COORDINATE}]"
     - name: Use PR Coordinate
       id: pr_step
       if: ${{ github.event_name == 'pull_request' }}
@@ -34,4 +34,4 @@ runs:
         export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/pr-${{ github.sha }}"
         echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_ENV;
         echo "coordinateExists=true" >> $GITHUB_ENV;
-        echo "----> creating PR package coordinate: [${env.coordinate}]"
+        echo "----> creating PR package coordinate: [${PACKAGE_COORDINATE}]"
