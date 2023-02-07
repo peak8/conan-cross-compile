@@ -25,7 +25,7 @@ runs:
 
     - name: Check if Package Exists
       id: package_exists
-      if: ${{ env.PACKAGE_COORDINATE }}
+      if: steps.release_step.outcome == 'success' || steps.pr_step.outcome == 'success'
       shell: bash
       run: |
         echo "------> Check if package " ${{ env.PACKAGE_COORDINATE }} "exists"
