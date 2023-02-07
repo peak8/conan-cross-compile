@@ -44,7 +44,7 @@ runs:
 
     - name: Build Library
       id: build_debug
-      if: ${{ (steps.package_exists.outcome == 'success') }}
+      if: ${{ env.packageExists == false }}
       shell: bash
       run: >
         conan create
