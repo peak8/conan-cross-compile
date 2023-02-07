@@ -20,6 +20,7 @@ runs:
     - name: Use Release Coordinate
       id: release_step
       if: ${{ !(github.event_name == 'pull_request') }}
+      shell: bash
       run: |
         export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/production"
         echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_OUTPUT;
@@ -27,6 +28,7 @@ runs:
     - name: Use PR Coordinate
       id: pr_step
       if: ${{ github.event_name == 'pull_request' }}
+      shell: bash
       run: |
         export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/pr-${{ github.sha }}"
         echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_OUTPUT;
