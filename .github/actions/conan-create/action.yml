@@ -30,9 +30,12 @@ runs:
       if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
       shell: bash
       run: |
-        conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 >> temp.txt 
-        cat temp.txt 
+        conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 >> temp.txt
+        echo "HELLO 1"
+        cat temp.txt
+        echo "HELLO 2"
         ANY_ERRORS=$(cat temp.txt | grep ERROR | wc -l);
+        echo "HELLO 3"
         echo "ANY_ERRORS=[$ANY_ERRORS]";
         if [[ $ANY_ERRORS -gt 0 ]];
         then
