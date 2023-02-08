@@ -31,9 +31,10 @@ runs:
       shell: bash
       run: |
         conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} --json search.json
-        echo "HELLO 1"
-        echo "searchError=${{ jq .error search.json }}" >> $GITHUB_OUTPUT
+        echo "CONAN_SEARCH_RESULT=(jq .error search.json)" >> $GITHUB_OUTPUT
+        echo "coordinate=\"${CONAN_SEARCH_RESULT}\"" >> $GITHUB_OUTPUT
         echo "Searh result = ${{ env.searchError }}"
+        
       
 
     # - name: Build Library
