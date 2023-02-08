@@ -46,13 +46,14 @@ runs:
       shell: bash
       run: |
         conan create
+        ${{ inputs.recipe_directory }}/
+        ${{ env.PACKAGE_COORDINATE }}
         --build=missing
         --profile:build default
         --profile:host ${{ inputs.profile }}
         --test-folder None
         -s build_type=Debug
-        ${{ inputs.recipe_directory }}/
-        ${{ env.PACKAGE_COORDINATE }}
+        
 
     # - name: Deploy to Artifactory
     #   id: deploy_debug
