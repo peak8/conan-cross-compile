@@ -32,9 +32,11 @@ runs:
 
     - name: Check if Package Exists
       id: package_exists
+      env:
+        COORD: ${{ env.coordinate }}
       shell: bash
       run: |
-        conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} --json search.json
+        conan search -r peak8 ${{ env.COORD }} --json search.json
         export CONAN_SEARCH_RESULT=$(jq .error search.json)
         echo "searchError=\"${CONAN_SEARCH_RESULT}\"" >> $GITHUB_OUTPUT
         echo "------> Conan search error result = ${CONAN_SEARCH_RESULT}"
