@@ -59,7 +59,7 @@ runs:
         
     - name: Deploy to Artifactory
       id: deploy_debug
-      if: ${{ env.packageExists == false && (steps.build_debug.outcome == 'success') }}
+      if: ${{ env.packageExists == false }}
       shell: bash
       run: >
         conan upload
@@ -68,28 +68,29 @@ runs:
         --remote peak8
         '*'
 
-    # - name: Build Library
-    #   id: build_release
-    #   if: ${{ env.packageExists == false && (steps.deploy_debug.outcome == 'success') }}
-    #   shell: bash
-    #   run: >
-    #     conan create
-    #     --build=missing
-    #     --profile:build default
-    #     --profile:host ${{ inputs.profile }}
-    #     --test-folder None
-    #     ${{ inputs.options }}
-    #     -s build_type=Release
-    #     ${{ inputs.recipe_directory }}/
-    #     ${{ env.PACKAGE_COORDINATE }}
-
-    # - name: Deploy to Artifactory
-    #   id: deploy_release
-    #   if: ${{ env.packageExists == false && (steps.build_release.outcome == 'success') }}
-    #   shell: bash
-    #   run: >
-    #     conan upload
-    #     --all
-    #     --confirm
-    #     --remote peak8
-    #     '*'
+    - name: Build Library
+      id: build_release
+      if: ${{ env.packageExists == false }}
+      env:
+        COORD: ${{ env.coordinate }}
+      shell: bash
+      run: >
+        conan create
+        ${{ inputs.recipe_directory }}/
+        ${{ env.COORD }}
+        -s build_type=Release
+        --build=missing
+        --profile:build default
+        --profile:host ${{ inputs.profile }}
+        --test-folder None
+        
+    - name: Deploy to Artifactory
+      id: deploy_release
+      if: ${{ env.packageExists == false }}
+      shell: bash
+      run: >
+        conan upload
+        --all
+        --confirm
+        --remote peak8
+        '*'
