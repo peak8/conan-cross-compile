@@ -36,7 +36,7 @@ jobs:
         uses: ./.github/actions/configure-conan
 
       - name: Install JSON Parser
-        run: apt install jq
+        run: sudo apt install jq
 
       - name: Build zlib
         id: zlib-1_2_13
