@@ -30,22 +30,11 @@ runs:
       if: ${{ (steps.generate_conan_coordinate.outcome == 'success') }}
       shell: bash
       run: |
-        conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1
+        conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} --json search.json
         echo "HELLO 1"
-        echo something | grep so
-        echo "HELLO 2"
-        echo bro | grep apple
-        echo "HELLO 3"
-        ANY_ERRORS=$(conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} 2>&1 | grep ERROR | wc -l);
-        echo "ANY_ERRORS=[$ANY_ERRORS]";
-        if [[ $ANY_ERRORS -gt 0 ]];
-        then
-          echo "packageExists=false" >> $GITHUB_OUTPUT;
-          echo "Package does not already exist!";
-        else
-          echo "packageExists=true" >> $GITHUB_OUTPUT;
-          echo "Package already exists!";
-        fi
+        echo "searchError=${{ jq .error search.json }}" >> $GITHUB_OUTPUT
+        echo "Searh result = ${{ env.searchError }}"
+      
 
     # - name: Build Library
     #   id: build_debug

@@ -35,12 +35,8 @@ jobs:
       - name: Configure Conan
         uses: ./.github/actions/configure-conan
 
-      - name: just
-        run: |
-          echo something | grep so
-          echo "HELLO 2"
-          echo bro | grep apple
-          echo "HELLO 3"
+      - name: Install JSON Parser
+        run: apt install jq
 
       - name: Build zlib
         id: zlib-1_2_13
