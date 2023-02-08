@@ -53,7 +53,7 @@ runs:
         --test-folder None
         -s build_type=Debug
         ${{ inputs.recipe_directory }}/
-        ${{ COORD }}
+        $COORD
 
     # - name: Deploy to Artifactory
     #   id: deploy_debug
