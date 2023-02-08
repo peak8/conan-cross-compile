@@ -37,7 +37,7 @@ runs:
 
     - name: Build Library
       id: build_debug
-      if: ${{ env.searchError == true }}
+      if: ${{ env.searchError == false }}
       shell: bash
       run: |
         conan create
