@@ -34,14 +34,13 @@ runs:
       id: package_exists
       env:
         COORD: ${{ env.coordinate }}
-        ARCH: ${{ contains(jq .results[].items[].packages[].settings.arch, "x86_64")}}
       shell: bash
       run: |
         conan search -r peak8 ${{ env.COORD }} --json search.json
         export CONAN_SEARCH_RESULT=$(jq .error search.json)
         echo "searchError=\"${CONAN_SEARCH_RESULT}\"" >> $GITHUB_OUTPUT
         echo "------> Conan search error result = ${CONAN_SEARCH_RESULT}"
-        
+        export ARCH_SEARCH=$(contains(jq .results[].items[].packages[].settings.arch, "x86_64"))
 
     - name: Build Library
       id: build_debug
