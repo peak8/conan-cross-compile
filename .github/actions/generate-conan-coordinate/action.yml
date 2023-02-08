@@ -21,10 +21,6 @@ runs:
       id: release_step
       if: ${{ !(github.event_name == 'pull_request') }}
       run: |
-        echo something | grep so
-        echo "HELLO 2"
-        echo bro | grep apple
-        echo "HELLO 3"
         export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/production"
         echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_OUTPUT;
         echo "----> creating Release package coordinate: [${PACKAGE_COORDINATE}]"
