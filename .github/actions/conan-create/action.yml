@@ -23,30 +23,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # - name: Generate Conan Coordinate
-    #   id: generate_conan_coordinate
-    #   uses: ./.github/actions/generate-conan-coordinate
-    #   with:
-    #     package_name: ${{ inputs.package_name }}
-    #     package_version: ${{ inputs.package_version }}
-
-    - name: Use Release Coordinate
-      id: release_step
-      if: ${{ !(github.event_name == 'pull_request') }}
-      run: |
-        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/production"
-        echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_OUTPUT;
-        echo "----> creating Release package coordinate: [${PACKAGE_COORDINATE}]"
-      shell: bash
-
-    - name: Use PR Coordinate
-      id: pr_step
-      if: ${{ github.event_name == 'pull_request' }}
-      run: |
-        export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/pr-${{ github.sha }}"
-        echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_OUTPUT;
-        echo "----> creating PR package coordinate: [${PACKAGE_COORDINATE}]"
-      shell: bash
+    - name: Generate Conan Coordinate
+      id: generate_conan_coordinate
+      uses: ./.github/actions/generate-conan-coordinate
+      with:
+        package_name: ${{ inputs.package_name }}
+        package_version: ${{ inputs.package_version }}
 
     - name: Check if Package Exists
       id: package_exists
@@ -69,7 +51,7 @@ runs:
         --test-folder None
         -s build_type=Debug
         ${{ inputs.recipe_directory }}/
-        ${{ env.coordinate }}
+        ${ env.PACKAGE_COORDINATE }
 
     # - name: Deploy to Artifactory
     #   id: deploy_debug
