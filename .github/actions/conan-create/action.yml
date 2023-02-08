@@ -52,8 +52,7 @@ runs:
         --test-folder None
         ${{ inputs.options }}
         -s build_type=Debug
-        ${{ inputs.recipe_directory }}/
-        ${{ env.PACKAGE_COORDINATE }}
+        ${{ inputs.recipe_directory }}/${{ env.PACKAGE_COORDINATE }}
 
     # - name: Deploy to Artifactory
     #   id: deploy_debug
