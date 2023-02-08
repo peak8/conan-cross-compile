@@ -14,6 +14,11 @@ inputs:
   recipe_directory:
     description: 'The path to the required recipe for the library'
     required: true
+  options:
+      description: 'A string of any options for the package'
+      required: false
+      type: string
+      default: ''
 
 runs:
   using: "composite"
