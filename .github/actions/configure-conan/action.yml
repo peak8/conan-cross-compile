@@ -10,5 +10,4 @@ runs:
         echo "----> Using production server"
         conan remote add peak8 https://dandresky.jfrog.io/artifactory/api/conan/peak8
         conan user "$CONAN_USERNAME" -r peak8 -p "$CONAN_PASSWORD"
-        conan profile update settings.compiler.libcxx=libstdc++11 default
       shell: bash

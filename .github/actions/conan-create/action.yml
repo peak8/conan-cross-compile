@@ -57,24 +57,22 @@ runs:
         --profile:host ${{ inputs.profile }}
         --test-folder None
         
-        
-
-    # - name: Deploy to Artifactory
-    #   id: deploy_debug
-    #   if: ${{ env.packageExists == false && (steps.build_debug.outcome == 'success') }}
-    #   shell: bash
-    #   run: |
-    #     conan upload
-    #     --all
-    #     --confirm
-    #     --remote peak8
-    #     '*'
+    - name: Deploy to Artifactory
+      id: deploy_debug
+      if: ${{ env.packageExists == false && (steps.build_debug.outcome == 'success') }}
+      shell: bash
+      run: >
+        conan upload
+        --all
+        --confirm
+        --remote peak8
+        '*'
 
     # - name: Build Library
     #   id: build_release
     #   if: ${{ env.packageExists == false && (steps.deploy_debug.outcome == 'success') }}
     #   shell: bash
-    #   run: |
+    #   run: >
     #     conan create
     #     --build=missing
     #     --profile:build default
@@ -89,7 +87,7 @@ runs:
     #   id: deploy_release
     #   if: ${{ env.packageExists == false && (steps.build_release.outcome == 'success') }}
     #   shell: bash
-    #   run: |
+    #   run: >
     #     conan upload
     #     --all
     #     --confirm
