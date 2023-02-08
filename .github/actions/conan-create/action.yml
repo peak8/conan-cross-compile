@@ -31,10 +31,9 @@ runs:
       shell: bash
       run: |
         conan search -r peak8 ${{ env.PACKAGE_COORDINATE }} --json search.json
-        jq .error search.json
         export CONAN_SEARCH_RESULT=$(jq .error search.json)
         echo "searchError=\"${CONAN_SEARCH_RESULT}\"" >> $GITHUB_OUTPUT
-        echo "Searh result = ${CONAN_SEARCH_RESULT}"
+        echo "------> Conan search error result = ${env.searchError}"
         
       
 
