@@ -22,7 +22,7 @@ runs:
       if: ${{ !(github.event_name == 'pull_request') }}
       run: |
         export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/production"
-        echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_ENV;
+        echo "coordinate=${PACKAGE_COORDINATE}" >> $GITHUB_ENV;
         echo "----> creating Release package coordinate: [${PACKAGE_COORDINATE}]"
       shell: bash
 
