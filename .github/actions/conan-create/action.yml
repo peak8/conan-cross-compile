@@ -42,8 +42,6 @@ runs:
     - name: Build Library
       id: build_debug
       if: ${{ env.searchError == false }}
-      env:
-        COORD: ${{ env.coordinate }}
       shell: bash
       run: |
         conan create
@@ -53,7 +51,7 @@ runs:
         --test-folder None
         -s build_type=Debug
         ${{ inputs.recipe_directory }}/
-        $COORD
+        ${{ env.searchError }}
 
     # - name: Deploy to Artifactory
     #   id: deploy_debug
