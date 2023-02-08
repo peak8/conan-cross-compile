@@ -47,7 +47,7 @@ runs:
       env:
         COORD: ${{ env.coordinate }}
       shell: bash
-      run: |
+      run: >
         conan create
         ${{ inputs.recipe_directory }}/
         ${{ env.COORD }}
