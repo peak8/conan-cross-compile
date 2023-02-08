@@ -31,6 +31,6 @@ runs:
       if: ${{ github.event_name == 'pull_request' }}
       run: |
         export PACKAGE_COORDINATE="${{ inputs.package_name }}/${{ inputs.package_version }}@peak8/pr-${{ github.sha }}"
-        echo "coordinate=\"${PACKAGE_COORDINATE}\"" >> $GITHUB_ENV;
+        echo "coordinate=${PACKAGE_COORDINATE}" >> $GITHUB_ENV;
         echo "----> creating PR package coordinate: [${PACKAGE_COORDINATE}]"
       shell: bash
