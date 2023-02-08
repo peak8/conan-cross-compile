@@ -45,7 +45,7 @@ runs:
       id: build_debug
       if: ${{ env.searchError == false }}
       env:
-        COORD: ${{ env.coordinate }}
+        COORD: "zlib/1.2.12@peak8/production"
       shell: bash
       run: |
         conan create
