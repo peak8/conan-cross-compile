@@ -40,7 +40,7 @@ runs:
         export CONAN_SEARCH_RESULT=$(jq .error search.json)
         echo "searchError=\"${CONAN_SEARCH_RESULT}\"" >> $GITHUB_OUTPUT
         echo "------> Conan search error result = ${CONAN_SEARCH_RESULT}"
-        export ARCH_SEARCH=$(contains(jq .results[].items[].packages[].settings.arch, "x86_64"))
+        export ARCH_SEARCH=$(contains(jq .results[].items[].packages[].settings.arch search.json, "x86_64"))
 
     - name: Build Library
       id: build_debug
