@@ -11,6 +11,13 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+
+env:
+  CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+  CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  CONAN_NON_INTERACTIVE: 1
+  CONAN_REVISIONS_ENABLED: 1
+  CONAN_LOGGING_LEVEL: debug
     
 
 jobs:
@@ -21,9 +28,8 @@ jobs:
         manifest: 
           - linux-x86_64.json
           - linux-armv8.json
-    secrets:
-      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+    # outputs:
+    #   result: ${{ steps.?.outputs.? }}
     steps:
       - uses: actions/checkout@v3.3.0
 
