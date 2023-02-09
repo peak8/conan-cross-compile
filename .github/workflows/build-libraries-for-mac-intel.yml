@@ -34,17 +34,14 @@ jobs:
       - name: Configure Conan
         uses: ./.github/actions/configure-conan
 
-      - name: Install JSON Parser
-        run: brew install jq
-
-      # - name: Build zlib
-      #   id: zlib-1_2_13
-      #   uses: ./.github/actions/conan-create
-      #   with:
-      #     package_name: zlib
-      #     package_version: 1.2.13
-      #     profile: conan-profiles/linux-x86_64
-      #     recipe_directory: 'recipes/zlib/1.2.13'
-      #     os: Linux
-      #     arch: x86_64
+      - name: Build zlib
+        id: zlib-1_2_13
+        uses: ./.github/actions/conan-create
+        with:
+          package_name: zlib
+          package_version: 1.2.13
+          profile: conan-profiles/mac-x86_64
+          recipe_directory: 'recipes/zlib/1.2.13'
+          os: Macos
+          arch: x86_64
       
