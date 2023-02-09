@@ -21,8 +21,8 @@ jobs:
         manifest: 
           - linux-x86_64.json
           - linux-armv8.json
-    outputs:
-      result: ${{ steps.?.outputs.? }}
+    # outputs:
+    #   result: ${{ steps.?.outputs.? }}
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
