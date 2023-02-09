@@ -49,7 +49,7 @@ runs:
 
     - name: Build Library
       id: build_debug
-      if: ${{ env.searchError == false }}
+      if: ${{ env.searchError == true }}
       env:
         COORD: ${{ env.coordinate }}
       shell: bash

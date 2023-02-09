@@ -1,0 +1,14 @@
+[settings]
+    os=Macos
+    arch=x86_64
+    compiler=apple-clang
+    compiler.version=12.0
+    compiler.libcxx=libstdc++11
+
+[conf]
+
+[options]
+
+[build_requires]
+
+[env]
