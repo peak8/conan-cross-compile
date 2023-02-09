@@ -50,8 +50,14 @@ jobs:
         id: read-manifest
         shell: bash
         run: |
-          export COUNT=$(jq '. | length' manifests/${{ matrix.manifest }})
-          echo "manifest=${COUNT}" >> $GITHUB_OUTPUT
+          export MANIFEST=$(jq .libraries[].package_name manifests/${{ matrix.manifest }})
+          echo "manifest=${MANIFEST}" >> $GITHUB_OUTPUT
+      - name: Read manifest length
+        id: read-manifest-length
+        shell: bash
+        run: |
+          export LENGTH=$(jq '. | length' manifests/${{ matrix.manifest }})
+          echo "length=${LENGTH}" >> $GITHUB_OUTPUT
 
   # libraries-for-linux-x86_64:
   #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@alternative-structure
