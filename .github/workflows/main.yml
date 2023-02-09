@@ -50,7 +50,7 @@ jobs:
         id: read-manifest
         shell: bash
         run: |
-          export MANIFEST=$(jq .libraries[].package_name manifests/${{ matrix.manifest }})
+          export MANIFEST=$(jq .libraries[0].package_name manifests/${{ matrix.manifest }})
           echo "manifest=${MANIFEST}" >> $GITHUB_OUTPUT
       - name: Read manifest length
         id: read-manifest-length
