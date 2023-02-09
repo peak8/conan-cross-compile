@@ -56,7 +56,7 @@ jobs:
         id: read-manifest-length
         shell: bash
         run: |
-          export LENGTH=$(jq '. | length' manifests/${{ matrix.manifest }})
+          export LENGTH=$(jq '.libraries | length' manifests/${{ matrix.manifest }})
           echo "length=${LENGTH}" >> $GITHUB_OUTPUT
 
   # libraries-for-linux-x86_64:
