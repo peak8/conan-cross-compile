@@ -14,49 +14,47 @@ on:
     
 
 jobs:
-  # what-to-build:
-  #   runs-on: ubuntu-22.04
-  #   strategy:
-  #     matrix:
-  #       manifest: 
-  #         - linux-x86_64.json
-  #         - linux-armv8.json
-  #   # outputs:
-  #   #   result: ${{ steps.?.outputs.? }}
-  #   secrets:
-  #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-  #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
-  #   steps:
-  #     - uses: actions/checkout@v3.3.0
-
-  #     - name: Install Conan
-  #       run: pip install conan
-
-  #     - name: Configure Conan
-  #       uses: ./.github/actions/configure-conan
-
-  #     - name: Install JSON Parser
-  #       run: sudo apt install jq
-
-  #     - name: Download all Conan package metadata
-  #       id: download-all-conan-package-metadata
-  #       shell: bash
-  #       run: conan search -r peak8 --json search-conan-all.json
-      
-  #     - name: Read manifest
-  #       id: read-manifest
-  #       shell: bash
-  #       run: |
-  #         export MANIFEST=$(jq .libraries[] manifests/${{ matrix.manifest }})
-  #         echo "manifest=\"${MANIFEST}\"" >> $GITHUB_OUTPUT
-
-
-
-  libraries-for-linux-x86_64:
-    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@alternative-structure
+  what-to-build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        manifest: 
+          - linux-x86_64.json
+          - linux-armv8.json
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - name: Install Conan
+        run: pip install conan
+
+      - name: Configure Conan
+        uses: ./.github/actions/configure-conan
+
+      - name: Install JSON Parser
+        run: sudo apt install jq
+
+      - name: Download all Conan package metadata
+        id: download-all-conan-package-metadata
+        shell: bash
+        run: conan search -r peak8 --json search-conan-all.json
+      
+      - name: Read manifest
+        id: read-manifest
+        shell: bash
+        run: |
+          export MANIFEST=$(jq .libraries[] manifests/${{ matrix.manifest }})
+          echo "manifest=\"${MANIFEST}\"" >> $GITHUB_OUTPUT
+
+
+
+  # libraries-for-linux-x86_64:
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@alternative-structure
+  #   secrets:
+  #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+  #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
 
 
