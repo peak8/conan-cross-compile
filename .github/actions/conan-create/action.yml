@@ -14,6 +14,12 @@ inputs:
   recipe_directory:
     description: 'The path to the required recipe for the library'
     required: true
+  os:
+    description: 'The target operating system'
+    required: true
+  arch:
+    description: 'The target system architecture'
+    required: true
   options:
       description: 'A string of any options for the package'
       required: false
@@ -36,7 +42,7 @@ runs:
         COORD: ${{ env.coordinate }}
       shell: bash
       run: |
-        conan search -r peak8 ${{ env.COORD }} --json search.json
+        conan search -r peak8 ${{ env.COORD }} -q "os=${{inputs.os}} AND arch=${{inputs.arch}}" --json search.json
         export CONAN_SEARCH_RESULT=$(jq .error search.json)
         echo "searchError=\"${CONAN_SEARCH_RESULT}\"" >> $GITHUB_OUTPUT
         echo "------> Conan search error result = ${CONAN_SEARCH_RESULT}"
