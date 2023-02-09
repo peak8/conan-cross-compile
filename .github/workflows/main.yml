@@ -52,9 +52,7 @@ jobs:
         shell: bash
         run: |
           export MANIFEST=$(jq .libraries[] manifests/${{ matrix.manifest }})
-          echo "manifest=\"${MANIFEST}\"" >> $GITHUB_OUTPUT
-
-
+          echo "manifest=\"${MANIFEST}\"" >> $GITHUB_ENV
 
   # libraries-for-linux-x86_64:
   #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@alternative-structure
