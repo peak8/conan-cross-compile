@@ -58,6 +58,15 @@ jobs:
         run: |
           export LENGTH=$(jq '.libraries | length' manifests/${{ matrix.manifest }})
           echo "length=${LENGTH}" >> $GITHUB_OUTPUT
+      - name: For loop
+        id: for-loop
+        shell: bash
+        run: |
+          for i in length
+          do
+            export MANIFEST=$(jq .libraries[$i].package_name manifests/${{ matrix.manifest }})
+            echo "manifest=${MANIFEST}" >> $GITHUB_OUTPUT
+          done
 
   # libraries-for-linux-x86_64:
   #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@alternative-structure
