@@ -50,8 +50,6 @@ jobs:
         id: read-manifest
         shell: bash
         run: |
-          export MANIFEST=$(jq .libraries[].package_name manifests/${{ matrix.manifest }})
-          echo "manifest=${MANIFEST}" >> $GITHUB_OUTPUT
           export COUNT=$(jq '. | length' manifests/${{ matrix.manifest }})
           echo "manifest=${COUNT}" >> $GITHUB_OUTPUT
 
