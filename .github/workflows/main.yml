@@ -11,7 +11,10 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-    
+
+secrets:
+  CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+  CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
 jobs:
   what-to-build:
@@ -23,9 +26,7 @@ jobs:
           - linux-armv8.json
     # outputs:
     #   result: ${{ steps.?.outputs.? }}
-    secrets:
-      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+    
     steps:
       - uses: actions/checkout@v3.3.0
 
