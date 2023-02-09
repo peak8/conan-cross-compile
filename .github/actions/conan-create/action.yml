@@ -65,7 +65,7 @@ runs:
         
     - name: Deploy to Artifactory
       id: deploy_debug
-      if: ${{ env.packageExists == false }}
+      if: ${{ env.searchError == true }}
       shell: bash
       run: >
         conan upload
@@ -76,7 +76,7 @@ runs:
 
     - name: Build Library
       id: build_release
-      if: ${{ env.packageExists == false }}
+      if: ${{ env.searchError == true }}
       env:
         COORD: ${{ env.coordinate }}
       shell: bash
@@ -92,7 +92,7 @@ runs:
         
     - name: Deploy to Artifactory
       id: deploy_release
-      if: ${{ env.packageExists == false }}
+      if: ${{ env.searchError == true }}
       shell: bash
       run: >
         conan upload

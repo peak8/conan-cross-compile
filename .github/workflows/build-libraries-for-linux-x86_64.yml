@@ -40,7 +40,7 @@ jobs:
         uses: ./.github/actions/conan-create
         with:
           package_name: zlib
-          package_version: 1.2.13
+          package_version: 1.2.11
           profile: conan-profiles/linux-x86_64
           recipe_directory: 'recipes/zlib/1.2.13'
           os: Linux
