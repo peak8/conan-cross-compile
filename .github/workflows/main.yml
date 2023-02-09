@@ -27,7 +27,6 @@ jobs:
       matrix:
         manifest: 
           - linux-x86_64.json
-          - linux-armv8.json
     # outputs:
     #   result: ${{ steps.?.outputs.? }}
     steps:
