@@ -68,65 +68,56 @@ runs:
           echo "searchError=false" >> $GITHUB_OUTPUT
         fi
 
-
-
-
-
-
-    #     export CONAN_SEARCH_RESULT=$(jq .error search.json)
-    #     echo "searchError=\"${CONAN_SEARCH_RESULT}\"" >> $GITHUB_OUTPUT
-    #     echo "------> Conan search error result = ${CONAN_SEARCH_RESULT}"
-
-    # - name: Build Library
-    #   id: build_debug
-    #   if: ${{ env.searchError == true }}
-    #   env:
-    #     COORD: ${{ env.coordinate }}
-    #   shell: bash
-    #   run: >
-    #     conan create
-    #     ${{ inputs.recipe_directory }}/
-    #     ${{ env.COORD }}
-    #     -s build_type=Debug
-    #     --build=missing
-    #     --profile:build default
-    #     --profile:host ${{ inputs.profile }}
-    #     --test-folder None
+    - name: Build Library
+      id: build_debug
+      if: ${{ env.searchError == true }}
+      env:
+        COORD: ${{ env.coordinate }}
+      shell: bash
+      run: >
+        conan create
+        ${{ inputs.recipe_directory }}/
+        ${{ env.COORD }}
+        -s build_type=Debug
+        --build=missing
+        --profile:build default
+        --profile:host ${{ inputs.profile }}
+        --test-folder None
         
-    # - name: Deploy to Artifactory
-    #   id: deploy_debug
-    #   if: ${{ env.searchError == true }}
-    #   shell: bash
-    #   run: >
-    #     conan upload
-    #     --all
-    #     --confirm
-    #     --remote peak8
-    #     '*'
+    - name: Deploy to Artifactory
+      id: deploy_debug
+      if: ${{ env.searchError == true }}
+      shell: bash
+      run: >
+        conan upload
+        --all
+        --confirm
+        --remote peak8
+        '*'
 
-    # - name: Build Library
-    #   id: build_release
-    #   if: ${{ env.searchError == true }}
-    #   env:
-    #     COORD: ${{ env.coordinate }}
-    #   shell: bash
-    #   run: >
-    #     conan create
-    #     ${{ inputs.recipe_directory }}/
-    #     ${{ env.COORD }}
-    #     -s build_type=Release
-    #     --build=missing
-    #     --profile:build default
-    #     --profile:host ${{ inputs.profile }}
-    #     --test-folder None
+    - name: Build Library
+      id: build_release
+      if: ${{ env.searchError == true }}
+      env:
+        COORD: ${{ env.coordinate }}
+      shell: bash
+      run: >
+        conan create
+        ${{ inputs.recipe_directory }}/
+        ${{ env.COORD }}
+        -s build_type=Release
+        --build=missing
+        --profile:build default
+        --profile:host ${{ inputs.profile }}
+        --test-folder None
         
-    # - name: Deploy to Artifactory
-    #   id: deploy_release
-    #   if: ${{ env.searchError == true }}
-    #   shell: bash
-    #   run: >
-    #     conan upload
-    #     --all
-    #     --confirm
-    #     --remote peak8
-    #     '*'
+    - name: Deploy to Artifactory
+      id: deploy_release
+      if: ${{ env.searchError == true }}
+      shell: bash
+      run: >
+        conan upload
+        --all
+        --confirm
+        --remote peak8
+        '*'

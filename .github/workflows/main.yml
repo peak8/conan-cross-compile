@@ -20,11 +20,11 @@ jobs:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
-  # libraries-for-mac-intel:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-intel.yml@alternative-structure
-  #   secrets:
-  #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-  #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  libraries-for-mac-intel:
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-intel.yml@alternative-structure
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
 
 
