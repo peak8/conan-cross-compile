@@ -1,0 +1,123 @@
+name: Conan Create
+description: Create and deploy a conan package for a library if it does not already exist.
+
+inputs:
+  package_name:
+    description: 'The name of the package to build'
+    required: true
+  package_version:
+    description: 'The exact version of the package that it will be tagged as'
+    required: true
+  profile:
+    description: 'The path to the conan profile defining build info'
+    required: true
+  recipe_directory:
+    description: 'The path to the required recipe for the library'
+    required: true
+  os:
+    description: 'The target operating system'
+    required: true
+  arch:
+    description: 'The target system architecture'
+    required: true
+  options:
+      description: 'A string of any options for the package'
+      required: false
+      type: string
+      default: ''
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate Conan Coordinate
+      id: generate_conan_coordinate
+      uses: ./.github/actions/generate-conan-coordinate
+      with:
+        package_name: ${{ inputs.package_name }}
+        package_version: ${{ inputs.package_version }}
+
+    # Search conan for package coordinate with a specific OS and architecture. If there is no package matching the
+    # package coordinate, regardless of OS or architecture, then the result will return a json string with error =
+    # true and an empty results array. This error will be picked up by Github actions and crash the script. This can
+    # be dealt with by setting continue-on-error to true.
+    # If a matching coordinate is found but no matching OS and architecture then error will be false and the results
+    # array will be non zero. However, the items array will have a zero-length packages array indicating the package
+    # doesn't exist.
+    # THE JSON FEATURE IS EXPERIMENTAL AT THIS TIME AND THE ABOVE RULES COULD CHANGE !!!!!!!!!!!
+    - name: Search for Package in Conan
+      id: search_for_package
+      continue-on-error: true
+      env:
+        COORD: ${{ env.coordinate }}
+      shell: bash
+      run: |
+        echo "-----> An error may be generated if there is no matching coordinate. However, there will be a json file."
+        conan search -r peak8 ${{ env.COORD }} -q "os=${{inputs.os}} AND arch=${{inputs.arch}}" --json search.json
+        
+    - name: Inspect the search results
+      id: inspect_search_results
+      shell: bash
+      run: |
+        if [ $(jq '.results | length' search.json)  == 0 ]
+        then
+          echo "searchError=true" >> $GITHUB_ENV
+        elif [ $(jq '.results[0].items[0].packages | length' search.json) == 0 ]
+        then
+          echo "searchError=true" >> $GITHUB_ENV
+        else
+          echo "searchError=false" >> $GITHUB_ENV
+        fi
+
+    - name: Build Library
+      id: build_debug
+      if: ${{ env.searchError == 'true' }}
+      env:
+        COORD: ${{ env.coordinate }}
+      shell: bash
+      run: >
+        conan create
+        ${{ inputs.recipe_directory }}/
+        ${{ env.COORD }}
+        -s build_type=Debug
+        --build=missing
+        --profile:build default
+        --profile:host ${{ inputs.profile }}
+        --test-folder None
+        
+    - name: Deploy to Artifactory
+      id: deploy_debug
+      if: ${{ env.searchError == 'true' }}
+      shell: bash
+      run: >
+        conan upload
+        --all
+        --confirm
+        --remote peak8
+        '*'
+
+    - name: Build Library
+      id: build_release
+      if: ${{ env.searchError == 'true' }}
+      env:
+        COORD: ${{ env.coordinate }}
+      shell: bash
+      run: >
+        conan create
+        ${{ inputs.recipe_directory }}/
+        ${{ env.COORD }}
+        -s build_type=Release
+        --build=missing
+        --profile:build default
+        --profile:host ${{ inputs.profile }}
+        --test-folder None
+        
+    - name: Deploy to Artifactory
+      id: deploy_release
+      if: ${{ env.searchError == 'true' }}
+      shell: bash
+      run: >
+        conan upload
+        --all
+        --confirm
+        --remote peak8
+        '*'

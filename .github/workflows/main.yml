@@ -1,39 +1,49 @@
-# This is the main workflow for the conan-cross-compile project. All other workflows are launched fron here.
-#
-# The conan-cross-compile project is created to cross-compile libraries I use for various projects deployed
-# on devices such as the Verdin iMX8 board, Raspberry Pi, etc.
-#
-# Each GitHub Action job is defined as follows:
-#
-# XXX__libraryName__XXX:
-#   uses: peak8/conan-cross-compile/.github/workflows/build_conan_package.yml@main
-#   with:
-#     package_name: XXX__libraryName__XXX
-#     package_version: XXX__libraryVersion__XXX
-#     recipe_directory: 'XXX__libraryPath__XXX'
-#     options: '-o package:Option=True'
-#   secrets:
-#     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-#     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+# This is the main workflow for the conan-cross-compile project. At this level we launch workflows based on
+# target platform or project. 
 
 name: Main Workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - 'main'
+      - 'alternative-structure'
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    
 
 jobs:
-  zlib:
-    uses: peak8/conan-cross-compile/.github/workflows/build-conan-package.yml@main
-    with:
-      package_name: zlib
-      package_version: 1.2.13
-      recipe_directory: 'recipes/zlib/1.2.13'
+  libraries-for-linux-x86_64:
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@alternative-structure
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+
+  libraries-for-mac-intel:
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-intel.yml@alternative-structure
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+
+
+
+
+
+
+
+
+
+
+  # zlib:
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-conan-package.yml@main
+  #   with:
+  #     package_name: zlib
+  #     package_version: 1.2.13
+  #     recipe_directory: 'recipes/zlib/1.2.13'
+  #   secrets:
+  #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+  #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 #  boost:
 #    uses: peak8/conan-cross-compile/.github/workflows/build-conan-package.yml@main
 #    with:

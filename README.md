@@ -1,10 +1,17 @@
 # Conan Cross-Compile
 
-A simple project to explore cross-compiling using Conan and Github Actions. I am starting with building a 3rd party library and deploying to a personal artifactory account. This is kickstarted by examining the project Justin set up for Solstice and building on it. Then I will make a simple hello world app targetting the Verdin iMX8M+ module. Here I will have to learn creating a custom recipe.
+A project to build packages for 3rd party libraries and upload to personal Artifactory repo. This is mostly exploratory to learn Github actions and how to run actions in a smart way that doesn't burn Action minutes unnecessarily. 
+
+I make use of the Conan Search JSON output feature which is still experimental as of v1.58. However, this appears to have been introduced in v1.19 so may be stable enough.
+
+I will also use the built packages for personal side projects on the Verdin iMX8M+ board and Raspberry Pi boards.
 
 ## Target Platforms
 
-This repo will build Debug and Release versions for Linux x86 64-bit systems and ARMv8 64-bit systems such as the Verdin iMX8M+ board.
+- Linux x86 64-bit systems
+- ARMv8 64-bit systems
+- Mac Intel-based 64-bit systems
+- Mac ARMv8 64-bit systems
 
 ## Secrets
 
@@ -24,3 +31,34 @@ apt install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
 ```
 
 The install folder on Ubuntu will be /usr/aarch64-linux-gnu
+
+# How to Add Libraries
+
+## Create Recipe
+
+Typically it is adaquate to search for the desired package in Conan-Center. If it exists, it will typically only be built for Windows which is the reason we have this repo to cross compile for other platforms. Copy the conanfile.py and conandata.yml files to a folder with the following path:
+
+```
+recipes/<pkg name>/<pkg version>
+```
+
+It is likely that changes are not required but there is no guarantee.
+
+## Add the library meatadata to the appropriate build yaml file.
+
+Each platform has a yaml file titled "build-libraries-for...". Libraries to be built are listed in alphabetical order and have the following form:
+
+```
+- name: Build <pkg name>
+  id: <pkg name>-<pkg version>
+  uses: ./.github/actions/conan-create
+  with:
+    package_name: <pkg name>
+    package_version: <pkg version>
+    profile: conan-profiles/<conan profile>
+    recipe_directory: 'recipes/<pkg name>/<pkg version>'
+    os: <os>
+    arch: <architecture>
+```
+
+
