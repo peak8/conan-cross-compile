@@ -51,9 +51,22 @@ runs:
         COORD: ${{ env.coordinate }}
       shell: bash
       run: |
-        echo "An error may be generated if there is no matching coordinate. However, there will be a json file."
+        echo "-----> An error may be generated if there is no matching coordinate. However, there will be a json file."
         conan search -r peak8 ${{ env.COORD }} -q "os=${{inputs.os}} AND arch=${{inputs.arch}}" --json search.json
         
+    - name: Inspect the search results
+      id: inspect_search_results
+      shell: bash
+      run: |
+        if [ $(jq '.results | length' search.json)  == 0]
+        then
+          echo "searchError=true" >> $GITHUB_OUTPUT
+        elif [ $(jq '.results[0].items[0].packages | length' search.json) == 0]
+        then
+          echo "searchError=true" >> $GITHUB_OUTPUT
+        else
+          echo "searchError=false" >> $GITHUB_OUTPUT
+        fi
 
 
 
