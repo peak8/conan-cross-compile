@@ -52,6 +52,7 @@ runs:
       shell: bash
       run: |
         conan search -r peak8 ${{ env.COORD }} -q "os=${{inputs.os}} AND arch=${{inputs.arch}}" --json search.json
+        echo "An error may be generated if there is no matching coordinate. However, there will be a json file."
 
 
 
