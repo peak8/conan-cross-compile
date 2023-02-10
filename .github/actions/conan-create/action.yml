@@ -58,10 +58,10 @@ runs:
       id: inspect_search_results
       shell: bash
       run: |
-        if [ $(jq '.results | length' search.json)  == 0]
+        if [ $(jq '.results | length' search.json)  == 0 ]
         then
           echo "searchError=true" >> $GITHUB_OUTPUT
-        elif [ $(jq '.results[0].items[0].packages | length' search.json) == 0]
+        elif [ $(jq '.results[0].items[0].packages | length' search.json) == 0 ]
         then
           echo "searchError=true" >> $GITHUB_OUTPUT
         else
