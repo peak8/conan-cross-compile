@@ -60,12 +60,12 @@ runs:
       run: |
         if [ $(jq '.results | length' search.json)  == 0 ]
         then
-          echo "searchError=true" >> $GITHUB_OUTPUT
+          echo "searchError=true" >> $GITHUB_ENV
         elif [ $(jq '.results[0].items[0].packages | length' search.json) == 0 ]
         then
-          echo "searchError=true" >> $GITHUB_OUTPUT
+          echo "searchError=true" >> $GITHUB_ENV
         else
-          echo "searchError=false" >> $GITHUB_OUTPUT
+          echo "searchError=false" >> $GITHUB_ENV
         fi
 
     - name: Build Library
