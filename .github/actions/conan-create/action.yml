@@ -8,8 +8,11 @@ inputs:
   package_version:
     description: 'The exact version of the package that it will be tagged as'
     required: true
-  profile:
-    description: 'The path to the conan profile defining build info'
+  profile_build:
+    description: 'The path to the conan profile defining build info (or default)'
+    required: true
+  profile_host:
+    description: 'The path to the conan profile defining host (target) build info'
     required: true
   recipe_directory:
     description: 'The path to the required recipe for the library'
@@ -70,7 +73,7 @@ runs:
 
     - name: Build Library
       id: build_debug
-      if: ${{ env.searchError == 'true' }}
+      if: ${{ env.searchError == 'false' }}
       env:
         COORD: ${{ env.coordinate }}
       shell: bash
@@ -80,13 +83,13 @@ runs:
         ${{ env.COORD }}
         -s build_type=Debug
         --build=missing
-        --profile:build default
-        --profile:host ${{ inputs.profile }}
+        --profile:build ${{ inputs.profile_build }}
+        --profile:host ${{ inputs.profile_host }}
         --test-folder None
         
     - name: Deploy to Artifactory
       id: deploy_debug
-      if: ${{ env.searchError == 'true' }}
+      if: ${{ env.searchError == 'false' }}
       shell: bash
       run: >
         conan upload
@@ -107,8 +110,8 @@ runs:
         ${{ env.COORD }}
         -s build_type=Release
         --build=missing
-        --profile:build default
-        --profile:host ${{ inputs.profile }}
+        --profile:build ${{ inputs.profile_build }}
+        --profile:host ${{ inputs.profile_host }}
         --test-folder None
         
     - name: Deploy to Artifactory

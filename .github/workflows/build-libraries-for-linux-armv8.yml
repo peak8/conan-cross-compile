@@ -41,7 +41,8 @@ jobs:
         with:
           package_name: zlib
           package_version: 1.2.13
-          profile: conan-profiles/linux-armv8
+          profile_build: conan-profiles/linux-armv8-build
+          profile_host: conan-profiles/linux-armv8-host
           recipe_directory: 'recipes/zlib/1.2.13'
           os: Linux
           arch: armv8
