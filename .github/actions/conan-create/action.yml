@@ -43,7 +43,7 @@ runs:
     # If a matching coordinate is found but no matching OS and architecture then error will be false and the results
     # array will be non zero. However, the items array will have a zero-length packages array indicating the package
     # doesn't exist.
-    # THE JSON FEATURE IS EXPERIMENTAL AT THIS TIME AND THE ABOVE RULES COULD CHANGE !!!!!!!!!!!
+    # THE JSON FEATURE IS EXPERIMENTAL AS OF 1.58 AND THE ABOVE RULES COULD CHANGE !!!!!!!!!!!
     - name: Search for Package in Conan
       id: search_for_package
       continue-on-error: true
