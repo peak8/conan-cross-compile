@@ -5,31 +5,31 @@ name: Main Workflow
 
 on:
   push:
-    branches: [ add-windows-platform ]
+    branches: [ main ]
   workflow_dispatch:
     
 
 jobs:
   # libraries-for-linux-armv8:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-armv8.yml@add-windows-platform
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-armv8.yml@main
   #   secrets:
   #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
   #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
   # libraries-for-linux-x86_64:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@add-windows-platform
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@main
   #   secrets:
   #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
   #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
   # libraries-for-mac-x86_64:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-x86_64.yml@add-windows-platform
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-x86_64.yml@main
   #   secrets:
   #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
   #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
   libraries-for-windows-x86_64:
-    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-windows-x86_64.yml@add-windows-platform
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-windows-x86_64.yml@main
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
