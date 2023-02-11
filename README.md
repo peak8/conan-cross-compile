@@ -56,7 +56,7 @@ Each platform has a yaml file titled "build-libraries-for...". Libraries to be b
     package_name: <pkg name>
     package_version: <pkg version>
     profile_build: conan-profiles/<conan profile build>
-    profile: conan-profiles/<conan profile host>
+    profile_host: conan-profiles/<conan profile host>
     recipe_directory: 'recipes/<pkg name>/<pkg version>'
     os: <os>
     arch: <architecture>
