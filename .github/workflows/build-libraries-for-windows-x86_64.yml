@@ -1,0 +1,54 @@
+name: Build Libraries for Windows x86_64
+on:
+  workflow_call:
+    inputs:
+      options:
+        description: 'A string of any options for the package'
+        required: false
+        type: string
+        default: ''
+    secrets:
+      CONAN_USERNAME:
+        required: true
+      CONAN_PASSWORD:
+        required: true
+
+env:
+  CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+  CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  CONAN_NON_INTERACTIVE: 1
+  CONAN_REVISIONS_ENABLED: 1
+  CONAN_LOGGING_LEVEL: debug
+
+jobs:
+  windows_x86_64_job:
+    name: Build Windows Libraries
+    runs-on: windows-2019
+
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - name: Install Visual Studio 2017
+        run: |
+          choco install visualstudio2017community
+          choco install visualstudio2017-workload-universal --package-parameters "--includeOptional"
+          choco install visualstudio2017-workload-vctools --package-parameters "--includeOptional"
+
+      - name: Install Conan
+        run: pip install conan
+
+      - name: Configure Conan
+        uses: ./.github/actions/configure-conan
+
+      - name: Build zlib
+        id: zlib-1_2_13
+        uses: ./.github/actions/conan-create
+        with:
+          package_name: zlib
+          package_version: 1.2.13
+          profile_build: conan-profiles/windows-x86_64
+          profile_host: conan-profiles/windows-x86_64
+          recipe_directory: 'recipes/zlib/1.2.13'
+          os: Windows
+          arch: x86_64
+      
