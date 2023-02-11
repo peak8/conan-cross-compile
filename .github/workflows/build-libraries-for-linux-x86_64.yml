@@ -41,7 +41,8 @@ jobs:
         with:
           package_name: zlib
           package_version: 1.2.13
-          profile: conan-profiles/linux-x86_64
+          profile_build: default
+          profile_host: conan-profiles/linux-x86_64
           recipe_directory: 'recipes/zlib/1.2.13'
           os: Linux
           arch: x86_64
