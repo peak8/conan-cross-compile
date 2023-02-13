@@ -1,0 +1,6 @@
+# We need to standarize line endings across this entire repo
+# because the conan recipe files are hashed to ensure that the
+# file being built is the same. If we don't standarize, then
+# windows and linux/mac will produce different hashes, therefore
+# creating "different" recipies, though they're actually the same.
+* text eol=lf
