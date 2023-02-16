@@ -38,7 +38,7 @@ jobs:
           sudo apt-get install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
       - name: Install Conan
-        run: pip install conan
+        run: pip install --force-reinstall conan==1.58
 
       - name: Configure Conan
         uses: ./.github/actions/configure-conan
