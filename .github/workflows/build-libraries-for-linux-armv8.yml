@@ -25,6 +25,9 @@ jobs:
     # Builds libraries for use in applications to be deployed in the Linux armv8 machine like the Verdin iMX8M+
     name: Build Linux Libraries
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v3.3.0
@@ -49,6 +52,7 @@ jobs:
           profile_build: conan-profiles/linux-armv8-build
           profile_host: conan-profiles/linux-armv8-host
           recipe_directory: 'recipes/zlib/1.2.13'
+          build_type: ${{ matrix.build_type }}
           os: Linux
           arch: armv8
       

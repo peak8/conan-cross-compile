@@ -24,12 +24,16 @@ jobs:
   mac_intel_job:
     name: Build Mac ARMv8 Libraries
     runs-on: macos-12
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v3.3.0
 
       - name: Install Conan
         run: brew install conan
+        # specify version
 
       - name: Configure Conan
         uses: ./.github/actions/configure-conan
@@ -43,6 +47,7 @@ jobs:
           profile_build: default
           profile_host: conan-profiles/mac-armv8
           recipe_directory: 'recipes/zlib/1.2.13'
+          build_type: ${{ matrix.build_type }}
           os: Macos
           arch: armv8
       

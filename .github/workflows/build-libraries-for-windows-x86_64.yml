@@ -24,10 +24,14 @@ jobs:
   windows_x86_64_job:
     name: Build Windows Libraries
     runs-on: windows-2019
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v3.3.0
 
+      # SPECIFY TOOLSET IN THE PROFILE INSTEAD OF INSTALLING 2017
       - name: Install Visual Studio 2017
         run: |
           choco install visualstudio2017community
@@ -49,6 +53,7 @@ jobs:
           profile_build: conan-profiles/windows-x86_64
           profile_host: conan-profiles/windows-x86_64
           recipe_directory: 'recipes/zlib/1.2.13'
+          build_type: ${{ matrix.build_type }}
           os: Windows
           arch: x86_64
       

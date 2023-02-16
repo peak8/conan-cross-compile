@@ -62,4 +62,45 @@ Each platform has a yaml file titled "build-libraries-for...". Libraries to be b
     arch: <architecture>
 ```
 
+# Commands to inspect Conan Search results
 
+### Should return two valid packages
+conan search -r peak8 "zlib/1.2.13@peak8/production" -q "os=Linux AND arch=armv8" --json search.json
+
+### Should return error with empty results array
+conan search -r peak8 "zlib/1.2.11@peak8/production" -q "os=Linux AND arch=armv8" --json search.json
+
+### Should return valid results but with empty packages array
+conan search -r peak8 "zlib/1.2.13@peak8/production" -q "os=Linux AND arch=armv7" --json search.json
+
+# Commands to inspect built packages
+
+### Linux x86_64 - Debug
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/0508f825aee0fe3099a5dae626a5316104c6db0a/lib/libz.so
+
+### Linux x86_64 - Release
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/1748639999ed79b998e4fe4a6d292ed8e874736a/lib/libz.so
+
+### Linux ARMv8 - Debug
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib/libz.so
+
+### Linux ARMv8 - Release
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/115c8fa606e08a868a5ec8073c26c1a096c7263b/lib/libz.so
+
+### Macos x86_64 - Debug
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/d98fae1010d1fb9e7f79a1e8a72bbf129d8660a2/lib/libz.dylib
+
+### Macos x86_64 - Release
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/647afeb69d3b0a2d3d316e80b24d38c714cc6900/lib/libz.dylib
+
+### Macos ARMv8 - Debug
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/baf78352c82543f997ec32332829b6fa30714eaa/lib/libz.dylib
+
+### Macos ARMv8 - Release
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/8fafab5ebfba468fd21a497cfee65cafe294bd9e/lib/libz.dylib
+
+### Windows x86_64 - Debug
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/8cf01e2f50fcd6b63525e70584df0326550364e1/bin/zlibd.dll
+
+### Windows x86_64 - Release
+file ~/.conan/data/zlib/1.2.13/peak8/production/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/bin/zlib.dll

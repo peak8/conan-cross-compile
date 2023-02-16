@@ -24,6 +24,9 @@ jobs:
   mac_intel_job:
     name: Build Mac Intel Libraries
     runs-on: macos-12
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v3.3.0
@@ -43,6 +46,7 @@ jobs:
           profile_build: default
           profile_host: conan-profiles/mac-x86_64
           recipe_directory: 'recipes/zlib/1.2.13'
+          build_type: ${{ matrix.build_type }}
           os: Macos
           arch: x86_64
       

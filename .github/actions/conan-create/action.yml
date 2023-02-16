@@ -17,6 +17,9 @@ inputs:
   recipe_directory:
     description: 'The path to the required recipe for the library'
     required: true
+  build_type:
+    description: Debug or Release
+    required: true
   os:
     description: 'The target operating system'
     required: true
@@ -47,6 +50,8 @@ runs:
     # array will be non zero. However, the items array will have a zero-length packages array indicating the package
     # doesn't exist.
     # THE JSON FEATURE IS EXPERIMENTAL AS OF 1.58 AND THE ABOVE RULES COULD CHANGE !!!!!!!!!!!
+    # CAN I EXTRACT OS AND ARCH FROM THE CONAN PROFILE?????
+    # ADD MORE PARAMTERS LIKE COMPILER AND VERSION
     - name: Search for Package in Conan
       id: search_for_package
       continue-on-error: true
@@ -72,7 +77,7 @@ runs:
         fi
 
     - name: Build Library
-      id: build_debug
+      id: build
       if: ${{ env.searchError == 'true' }}
       env:
         COORD: ${{ env.coordinate }}
@@ -81,41 +86,14 @@ runs:
         conan create
         ${{ inputs.recipe_directory }}/
         ${{ env.COORD }}
-        -s build_type=Debug
+        -s build_type=${{ inputs.build_type }}
         --build=missing
         --profile:build ${{ inputs.profile_build }}
         --profile:host ${{ inputs.profile_host }}
         --test-folder None
         
     - name: Deploy to Artifactory
-      id: deploy_debug
-      if: ${{ env.searchError == 'true' }}
-      shell: bash
-      run: >
-        conan upload
-        --all
-        --confirm
-        --remote peak8
-        '*'
-
-    - name: Build Library
-      id: build_release
-      if: ${{ env.searchError == 'true' }}
-      env:
-        COORD: ${{ env.coordinate }}
-      shell: bash
-      run: >
-        conan create
-        ${{ inputs.recipe_directory }}/
-        ${{ env.COORD }}
-        -s build_type=Release
-        --build=missing
-        --profile:build ${{ inputs.profile_build }}
-        --profile:host ${{ inputs.profile_host }}
-        --test-folder None
-        
-    - name: Deploy to Artifactory
-      id: deploy_release
+      id: deploy
       if: ${{ env.searchError == 'true' }}
       shell: bash
       run: >
