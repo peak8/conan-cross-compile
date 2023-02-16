@@ -48,6 +48,4 @@ jobs:
           profile_host: conan-profiles/${{ matrix.host_profile }}
           recipe_directory: 'recipes/zlib/1.2.13'
           build_type: ${{ matrix.build_type }}
-          os: Linux
-          arch: x86_64
       

@@ -2,16 +2,15 @@
 
 A project to build packages for 3rd party libraries and upload to personal Artifactory repo. This is mostly exploratory to learn Github actions and how to run actions in a smart way that doesn't burn Action minutes unnecessarily. 
 
-I make use of the Conan Search JSON output feature which is still experimental as of v1.58. However, this appears to have been introduced in v1.19 so may be stable enough.
+I make use of the Conan Search JSON output feature which is still experimental as of v1.58 so I pin Conan to that version. Updating Conan will require inspection of the JSON search results to ensure the format has changed in a way that breacks searches.
 
 I will also use the built packages for personal side projects on the Verdin iMX8M+ board and Raspberry Pi boards.
 
 ## Target Platforms
 
-- Linux x86 64-bit systems
-- ARMv8 64-bit systems
-- Mac Intel-based 64-bit systems
-- Mac ARMv8 64-bit systems
+- Linux x86_64, ARMv8, and Android
+- Mac x86_64 and ARMv8
+- Windows x86_64
 
 ## Secrets
 
@@ -24,7 +23,7 @@ The stored secrets are:
 
 ## Cross compiler
 
-Installed the following:
+I install the following cross compiler for Linux ARMv8 platform:
 
 ```
 apt install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
@@ -58,8 +57,6 @@ Each platform has a yaml file titled "build-libraries-for...". Libraries to be b
     profile_build: conan-profiles/<conan profile build>
     profile_host: conan-profiles/<conan profile host>
     recipe_directory: 'recipes/<pkg name>/<pkg version>'
-    os: <os>
-    arch: <architecture>
 ```
 
 # Commands to inspect Conan Search results

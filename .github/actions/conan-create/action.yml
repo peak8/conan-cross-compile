@@ -20,12 +20,6 @@ inputs:
   build_type:
     description: Debug or Release
     required: true
-  os:
-    description: 'The target operating system'
-    required: true
-  arch:
-    description: 'The target system architecture'
-    required: true
   options:
       description: 'A string of any options for the package'
       required: false
