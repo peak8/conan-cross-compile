@@ -60,7 +60,7 @@ runs:
       shell: bash
       run: |
         echo "-----> An error may be generated if there is no matching coordinate. However, there will be a json file."
-        PATH=conan-profiles/${inputs.host_profile}
+        PATH=conan-profiles/$inputs.host_profile
         TARGET_OS=$(grep "os=" $PATH)
         TARGET_ARCH=$(grep "arch=" conan-profiles/${{inputs.host_profile}})
         echo TARGET_OS
