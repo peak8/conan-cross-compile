@@ -10,32 +10,20 @@ on:
     
 
 jobs:
-  # libraries-for-linux-armv8:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-armv8.yml@main
-  #   secrets:
-  #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-  #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
-
-  libraries-for-linux-x86_64:
-    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@main
+  libraries-for-linux-android:
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-android.yml@main
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
-  # libraries-for-mac-x86_64:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-x86_64.yml@main
+  # libraries-for-mac-ios:
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-ios.yml@main
   #   secrets:
   #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
   #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
-  # libraries-for-mac-armv8:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-mac-armv8.yml@main
-  #   secrets:
-  #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-  #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
-
-  # libraries-for-windows-x86_64:
-  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-windows-x86_64.yml@main
+  # libraries-for-windows:
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-windows.yml@main
   #   secrets:
   #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
   #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}

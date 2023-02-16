@@ -1,4 +1,4 @@
-name: Build Libraries for Linux x86_64
+name: Build Libraries for MacOS and iOS
 on:
   workflow_call:
     inputs:
@@ -21,19 +21,19 @@ env:
   CONAN_LOGGING_LEVEL: debug
 
 jobs:
-  linux_job:
-    # Builds libraries for use in applications to be deployed in the Linux x86_64 machine
-    name: Build Linux Libraries
-    runs-on: ubuntu-22.04
+  mac_ios_job:
+    name: Build Libraries for MacOS and iOS
+    runs-on: macos-12
     strategy:
       matrix:
+        host_profile: [mac-x86_64, mac-armv8]
         build_type: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v3.3.0
 
       - name: Install Conan
-        run: pip install conan==1.58
+        run: brew install conan==1.58
 
       - name: Configure Conan
         uses: ./.github/actions/configure-conan
@@ -45,9 +45,9 @@ jobs:
           package_name: zlib
           package_version: 1.2.13
           profile_build: default
-          profile_host: conan-profiles/linux-x86_64
+          profile_host: conan-profiles/${{ matrix.host_profile }}
           recipe_directory: 'recipes/zlib/1.2.13'
           build_type: ${{ matrix.build_type }}
-          os: Linux
+          os: Macos
           arch: x86_64
       
