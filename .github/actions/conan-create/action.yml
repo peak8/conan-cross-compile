@@ -60,8 +60,8 @@ runs:
       shell: bash
       run: |
         echo "-----> An error may be generated if there is no matching coordinate. However, there will be a json file."
-        TARGET_OS=$(grep "os=" ${{inputs.host_profile}})
-        TARGET_ARCH=$(grep "arch=" ${{inputs.host_profile}})
+        TARGET_OS=$(grep "os=" conan-profiles/${{inputs.host_profile}})
+        TARGET_ARCH=$(grep "arch=" conan-profiles/${{inputs.host_profile}})
         echo TARGET_OS
         conan search -r peak8 ${{ env.COORD }} -q "$TARGET_OS AND $TARGET_ARCH" --json search.json
         
