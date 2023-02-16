@@ -13,7 +13,3 @@ shared=True
 [build_requires]
 
 [env]
-
-[buildenv]
-targetos=Linux
-targetarch=x86_64
