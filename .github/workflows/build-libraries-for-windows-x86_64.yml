@@ -39,7 +39,7 @@ jobs:
           choco install visualstudio2017-workload-vctools --package-parameters "--includeOptional"
 
       - name: Install Conan
-        run: pip install --force-reinstall conan==1.58
+        run: pip install conan==1.58
 
       - name: Configure Conan
         uses: ./.github/actions/configure-conan
