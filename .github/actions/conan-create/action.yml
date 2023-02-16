@@ -59,8 +59,8 @@ runs:
         COORD: ${{ env.coordinate }}
       shell: bash
       run: |
-        TARGET_OS=$(grep "os=" conan-profiles/${{inputs.profile_host}})
-        TARGET_ARCH=$(grep "arch=" conan-profiles/${{inputs.profile_host}})
+        TARGET_OS=$(grep "os=" ${{inputs.profile_host}})
+        TARGET_ARCH=$(grep "arch=" ${{inputs.profile_host}})
         echo TARGET_OS
         conan search -r peak8 ${{ env.COORD }} -q "$TARGET_OS AND $TARGET_ARCH" --json search.json
         
