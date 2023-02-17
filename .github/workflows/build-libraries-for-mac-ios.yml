@@ -38,20 +38,14 @@ jobs:
       #     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
       #     python3 get-pip.py
 
-      - name: Install Python
-        run: brew install python
-
-      - name: Link PIP
-        run: brew unlink python && brew link python
+      # - name: Install Conan
+      #   run: pip install conan==1.58
 
       - name: Install Conan
-        run: pip install conan==1.58
-
-      # - name: Install Conan
-      #   run: |
-      #     brew tap-new $USER/local-conan
-      #     brew extract --version=1.58 conan $USER/local-conan
-      #     brew install $USER/local-conan/conan@1.58
+        run: |
+          brew tap-new $USER/local-conan
+          brew extract --version=1.58 conan $USER/local-conan
+          brew install $USER/local-conan/conan@1.58
 
       - name: Configure Conan
         uses: ./.github/actions/configure-conan
