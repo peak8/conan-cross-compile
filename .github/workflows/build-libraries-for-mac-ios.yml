@@ -32,11 +32,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
 
-      - name: Install Conan
+      - name: Install PIP
         run: |
           curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
           python3 get-pip.py
-          pip install conan==1.58
+
+      - name: Install Conan
+        run: pip install conan==1.58
 
       # - name: Install Conan
       #   run: |
