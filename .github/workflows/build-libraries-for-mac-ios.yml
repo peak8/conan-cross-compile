@@ -32,10 +32,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3.3.0
 
-      - name: Install PIP
-        run: |
-          curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-          python3 get-pip.py
+      # Using brew takes 8 minutes per matrix instance. Attempted pip to see if faster but can't find conan 1.58
+      # - name: Install PIP
+      #   run: |
+      #     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+      #     python3 get-pip.py
+
+      - name: Install Python
+        run: brew install python
+
+      - name: Link PIP
+        run: brew unlink python && brew link python
 
       - name: Install Conan
         run: pip install conan==1.58
