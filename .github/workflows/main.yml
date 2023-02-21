@@ -28,11 +28,11 @@ jobs:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
-  libraries-for-windows:
-    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-windows.yml@main
-    secrets:
-      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
-      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  # libraries-for-windows:
+  #   uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-windows.yml@main
+  #   secrets:
+  #     CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+  #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
 
 
 
