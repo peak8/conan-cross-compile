@@ -1,4 +1,4 @@
-name: Build Libraries for Linux x86_64, armv8, and Android
+name: Build Libraries for Linux armv8
 on:
   workflow_call:
     inputs:
@@ -22,15 +22,20 @@ env:
 
 jobs:
   linux_job:
-    name: Build Libraries for Linux x86_64, ARMv8, and Android
+    name: Build Libraries for Linux ARMv8
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        host_profile: [linux-x86_64, linux-armv8]
+        host_profile: [linux-armv8]
         build_type: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v3.3.0
+
+      - name: Install Cross-compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
       - name: Install Conan
         run: pip install conan==1.58

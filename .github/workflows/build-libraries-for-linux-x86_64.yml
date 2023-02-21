@@ -1,0 +1,51 @@
+name: Build Libraries for Linux x86_64
+on:
+  workflow_call:
+    inputs:
+      options:
+        description: 'A string of any options for the package'
+        required: false
+        type: string
+        default: ''
+    secrets:
+      CONAN_USERNAME:
+        required: true
+      CONAN_PASSWORD:
+        required: true
+
+env:
+  CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+  CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+  CONAN_NON_INTERACTIVE: 1
+  CONAN_REVISIONS_ENABLED: 1
+  CONAN_LOGGING_LEVEL: debug
+
+jobs:
+  linux_job:
+    name: Build Libraries for Linux x86_64
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        host_profile: [linux-x86_64]
+        build_type: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - name: Install Conan
+        run: pip install conan==1.58
+
+      - name: Configure Conan
+        uses: ./.github/actions/configure-conan
+
+      - name: Build zlib
+        id: zlib-1_2_13
+        uses: ./.github/actions/conan-create
+        with:
+          package_name: zlib
+          package_version: 1.2.13
+          profile_build: default
+          profile_host: conan-profiles/${{ matrix.host_profile }}
+          recipe_directory: 'recipes/zlib/1.2.13'
+          build_type: ${{ matrix.build_type }}
+      

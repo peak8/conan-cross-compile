@@ -10,8 +10,14 @@ on:
     
 
 jobs:
-  libraries-for-linux-android:
-    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-android.yml@main
+  libraries-for-linux-x86_64:
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-x86_64.yml@main
+    secrets:
+      CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+
+  libraries-for-linux-armv8:
+    uses: peak8/conan-cross-compile/.github/workflows/build-libraries-for-linux-armv8.yml@main
     secrets:
       CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
       CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
